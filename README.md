@@ -4,7 +4,7 @@ A small project that compares classical time series (SARIMAX/ARIMA) with Deep Le
 
 ---
 
-## 🚀 Quick links
+## Quick links
 - Backend: `be/` (FastAPI app)
 - Frontend: `gui/` (Svelte + Vite)
 - Dev Docker Compose: `docker-compose.yml` (local/dev)

@@ -905,16 +905,6 @@
 		color: #1a1a1a;
 	}
 
-	.note {
-		background: #fff3cd;
-		border: 1px solid #ffc107;
-		padding: 0.8rem;
-		border-radius: 6px;
-		margin-bottom: 1.5rem;
-		color: #856404;
-		font-size: 0.9rem;
-	}
-
 	.stats {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));

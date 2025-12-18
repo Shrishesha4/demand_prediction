@@ -243,13 +243,6 @@
 		border-top: 1px solid rgba(15, 23, 42, 0.04);
 	}
 
-	.info-section h3 {
-		text-align: left;
-		font-size: 1.05rem;
-		margin-bottom: 1rem;
-		color: #0b1220;
-	}
-
 	.steps {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

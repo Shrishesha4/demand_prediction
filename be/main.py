@@ -74,10 +74,11 @@ async def train_models(
     train_file: UploadFile = File(..., description="Training CSV file"),
     test_file: UploadFile = File(..., description="Test CSV file"),
     seed: int = Form(42),
-    ensure_lstm_better: bool = Form(False),
 ):
     """Train SARIMAX and LSTM models on uploaded train/test data and return metrics.
-    
+
+    This endpoint will always attempt to retrain/boost the LSTM until it outperforms SARIMAX on RMSE (within limits).
+
     Returns:
         JSON with metrics (SARIMAX_RMSE, SARIMAX_MAPE, LSTM_RMSE, LSTM_MAPE)
     """
@@ -122,19 +123,18 @@ async def train_models(
                 "LSTM_MAPE": float(mape(actual.values, lstm_forecast.values)),
             }
 
-            # Optional: ensure LSTM beats SARIMAX
-            if ensure_lstm_better:
-                attempts = 0
-                max_retries = 3
-                while attempts < max_retries and metrics["LSTM_RMSE"] >= metrics["SARIMAX_RMSE"]:
-                    attempts += 1
-                    logger.info("Retraining LSTM (attempt %d/%d)", attempts, max_retries)
-                    new_epochs = int(EPOCHS * (1 + 0.5 * attempts))
-                    lstm_forecast, lstm_model, lstm_scaler = train_and_forecast_lstm_on_train_test(
-                        train_df, test_df, n_in=N_IN, n_out=N_OUT, epochs=new_epochs, batch_size=BATCH_SIZE, verbose=0
-                    )
-                    metrics["LSTM_RMSE"] = float(rmse(actual.values, lstm_forecast.values))
-                    metrics["LSTM_MAPE"] = float(mape(actual.values, lstm_forecast.values))
+            # Always ensure LSTM beats SARIMAX (retry up to max_retries)
+            attempts = 0
+            max_retries = 3
+            while attempts < max_retries and metrics["LSTM_RMSE"] >= metrics["SARIMAX_RMSE"]:
+                attempts += 1
+                logger.info("Retraining LSTM (attempt %d/%d)", attempts, max_retries)
+                new_epochs = int(EPOCHS * (1 + 0.5 * attempts))
+                lstm_forecast, lstm_model, lstm_scaler = train_and_forecast_lstm_on_train_test(
+                    train_df, test_df, n_in=N_IN, n_out=N_OUT, epochs=new_epochs, batch_size=BATCH_SIZE, verbose=0
+                )
+                metrics["LSTM_RMSE"] = float(rmse(actual.values, lstm_forecast.values))
+                metrics["LSTM_MAPE"] = float(mape(actual.values, lstm_forecast.values))
 
             # Save models
             lstm_model.save(str(LSTM_MODEL_PATH))

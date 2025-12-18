@@ -1,0 +1,30 @@
+# Byte-compiled / caches
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv
+venv
+
+# Data & models
+models/
+*.csv
+*.h5
+*.keras
+
+# Notebook and tests
+*.ipynb
+.pytest_cache/
+
+# Node / GUI
+node_modules/
+gui/
+
+# Git
+.git
+
+# Misc
+*.log
+.env

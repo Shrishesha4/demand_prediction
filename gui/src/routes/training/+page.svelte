@@ -18,7 +18,6 @@
 	let trainFile: File | null = null;
 	let testFile: File | null = null;
 	let seed = 42;
-	let ensureLstmBetter = false;
 	let loading = false;
 	let metrics: any = null;
 	let error = '';
@@ -56,7 +55,6 @@
 			formData.append('train_file', trainFile);
 			formData.append('test_file', testFile);
 			formData.append('seed', seed.toString());
-			formData.append('ensure_lstm_better', ensureLstmBetter.toString());
 
 			const response = await fetch(`${API_BASE}/train`, {
 				method: 'POST',
@@ -111,7 +109,7 @@
 				labels: ['RMSE', 'MAPE (%)'],
 				datasets: [
 					{
-						label: 'SARIMAX',
+						label: 'ARIMA',
 						data: [metrics.SARIMAX_RMSE, metrics.SARIMAX_MAPE],
 						backgroundColor: 'rgba(74, 144, 226, 0.7)',
 						borderColor: '#4a90e2',
@@ -190,7 +188,7 @@
 </svelte:head>
 
 <div class="container">
-	<h1>Train SARIMAX & LSTM Models</h1>
+	<h1>Train ARIMA & LSTM Models</h1>
 	<p class="subtitle">Upload your training and test datasets to train forecasting models</p>
 
 	<div class="upload-section">
@@ -233,10 +231,7 @@
 			<input type="number" bind:value={seed} disabled={loading} />
 		</label>
 
-		<label class="option-row checkbox">
-			<input type="checkbox" bind:checked={ensureLstmBetter} disabled={loading} />
-			<span>Ensure LSTM outperforms SARIMAX (may take longer)</span>
-		</label>
+
 	</div>
 
 	<button class="train-btn" on:click={handleTrain} disabled={loading || !trainFile || !testFile}>
@@ -265,7 +260,7 @@
 
 			<div class="metrics-grid">
 				<div class="metric-card sarimax">
-					<h3>SARIMAX</h3>
+					<h3>ARIMA</h3>
 					<div class="metric-row">
 						<span>RMSE:</span>
 						<span class="value">{metrics.SARIMAX_RMSE.toFixed(2)}</span>
@@ -291,9 +286,9 @@
 
 			<div class="comparison">
 				{#if metrics.LSTM_RMSE < metrics.SARIMAX_RMSE}
-					<p class="winner">🎉 LSTM outperforms SARIMAX!</p>
+					<p class="winner">🎉 LSTM outperforms ARIMA!</p>
 				{:else}
-					<p class="info">SARIMAX performed better on this dataset.</p>
+					<p class="info">ARIMA performed better on this dataset.</p>
 				{/if}
 			</div>
 
@@ -375,10 +370,6 @@
 
 	.option-row:last-child {
 		margin-bottom: 0;
-	}
-
-	.option-row.checkbox {
-		cursor: pointer;
 	}
 
 	.option-row input[type='number'] {

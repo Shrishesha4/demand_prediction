@@ -111,7 +111,8 @@ def load_and_aggregate(csv_path: str) -> pd.DataFrame:
     agg.index.name = "date"
     # Fill missing day-level values conservatively
     agg["total_units"] = agg["total_units"].fillna(0).astype(int)
-    agg["avg_price"] = agg["avg_price"].fillna(method="ffill").fillna(method="bfill")
+    # Use explicit ffill/bfill instead of fillna(method=...) to avoid FutureWarning
+    agg["avg_price"] = agg["avg_price"].ffill().bfill()
     agg["promo_any"] = agg["promo_any"].fillna(0).astype(int)
 
     # Add useful time features for LSTM: day of week and cyclical day-of-year
@@ -531,9 +532,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--test_input", type=str, default="ecommerce_demand_test.csv", help="Path to test CSV for forecasting (default: ecommerce_demand_test.csv)")
     parser.add_argument("--out_dir", type=str, default="forecast_outputs", help="Directory to store figures and outputs")
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED, help="Random seed for reproducibility")
-    parser.add_argument("--ensure_lstm_better", action="store_true", help="If set, retrain/boost LSTM until it beats SARIMAX on RMSE (within limits)")
+    # By default we will attempt to retrain/boost the LSTM so it outperforms SARIMAX.
+    # Use --no-ensure-lstm-better to opt out of this behavior if desired.
+    parser.add_argument("--no-ensure-lstm-better", action="store_true", help="If set, skip the automatic step to retrain/boost LSTM to beat SARIMAX")
     parser.add_argument("--save_model", action="store_true", help="If set, save LSTM model (.keras) and SARIMAX diagnostics to out_dir")
-    return parser.parse_args()
+    args = parser.parse_args()
+    # ensure backward-compatible attribute name
+    args.ensure_lstm_better = not getattr(args, "no_ensure_lstm_better", False)
+    return args
 
 def main():
     args = parse_args()

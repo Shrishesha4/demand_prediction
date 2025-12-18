@@ -619,7 +619,7 @@
 
 <div class="container">
 	<h1>Future Demand Forecast</h1>
-	<p class="subtitle">Predict upcoming demand for the next 4 financial quarters per product</p>
+	<p class="subtitle">Predict upcoming demand for the upcoming financial quarters per product</p>
 
 	<div class="info-box">
 		<strong>Note:</strong> Make sure you've trained a model first in the
@@ -629,7 +629,7 @@
 	<div class="upload-section">
 		<div class="file-input-group">
 			<label for="data-file">
-				<span class="label-text">Historical Data CSV (with features: date, sku_id, units_sold, price, promotion_flag)</span>
+				<span class="label-text">Data Upload</span>
 				<input
 					id="data-file"
 					type="file"
@@ -647,8 +647,8 @@
 			<label class="option-item">
 				<span class="option-label">Forecast Model:</span>
 				<select bind:value={selectedModel} disabled={loading} class="model-select">
-					<option value="lstm">LSTM (Recommended)</option>
-					<option value="sarimax">SARIMAX</option>
+					<option value="lstm">LSTM</option>
+					<option value="sarimax">ARIMA</option>
 				</select>
 			</label>
 			<label class="option-item">

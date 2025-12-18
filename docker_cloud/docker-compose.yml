@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  demand-api:
+    image: "${BACKEND_IMAGE:-shrishesha4/df:latest}"
+    container_name: demand-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    # (Optional) set env_file: .env if you have secrets/config
+    # env_file:
+    #   - .env
+
+  frontend:
+    image: "${FRONTEND_IMAGE:-shrishesha4/df-frontend:latest}"
+    container_name: demand-frontend
+    restart: unless-stopped
+    ports:
+      - "3030:80"
+    environment:
+      # Comma-separated allowed hosts (e.g. "example.com,localhost"), or 'all' to allow any host
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-pdp.shrishesha.space}
+      - HOST=${HOST:-0.0.0.0}
+    depends_on:
+      - demand-api
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    # Example deploy config for Docker Swarm / cloud (optional)
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+
+# Optional: define networks if you want explicit control
+#networks:
+#  frontend_net:
+#    driver: bridge
+
+# Usage notes:
+# - Set ALLOWED_HOSTS and HOST via environment or an .env file when deploying to cloud.
+# - For production behind a load balancer, consider running a reverse proxy (nginx/traefik) and securing TLS there.

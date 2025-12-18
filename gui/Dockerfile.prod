@@ -1,0 +1,30 @@
+# Stage 1: Build the static site (use Node 20 for Vite/Svelte compatibility)
+FROM node:20-bullseye-slim AS build
+WORKDIR /app
+
+# Install deps and build
+COPY package*.json ./
+RUN npm ci --silent
+COPY . .
+# Build and normalize output into /app/dist for nginx stage
+RUN npm run build \
+  && mkdir -p /app/dist \
+  && if [ -d build/client ]; then cp -r build/client/* /app/dist; \
+     elif [ -d build ]; then cp -r build/* /app/dist; \
+     elif [ -d .svelte-kit/output/client ]; then cp -r .svelte-kit/output/client/* /app/dist; \
+     elif [ -d .svelte-kit/output/static ]; then cp -r .svelte-kit/output/static/* /app/dist; \
+     elif [ -d .svelte-kit/output ]; then cp -r .svelte-kit/output/* /app/dist; \
+     else echo "ERROR: no client bundle found (looked in build/, build/client, .svelte-kit/output{,/client,/static})" && ls -la /app && ls -la /app/.svelte-kit || true && exit 1; fi
+
+# Stage 2: Runtime - run the Vite preview server (works for static builds or adapter-node output)
+FROM node:20-bullseye-slim AS runtime
+WORKDIR /app
+
+# Copy built app and node_modules from build stage
+COPY --from=build /app /app
+
+# Expose HTTP port
+EXPOSE 80
+
+# Use Vite preview to serve the built site on port 80
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "80"]

@@ -8,27 +8,25 @@
 
 <div class="container">
 	<header class="hero">
-		<h1>📊 E-commerce Demand Forecasting</h1>
-		<p class="tagline">AI-powered demand prediction using SARIMAX and LSTM models</p>
+		<h1>E-commerce Demand Forecasting</h1>
+		<p class="tagline">Product demand prediction using ARIMA and LSTM models</p>
 	</header>
 
 	<div class="cards">
 		<div class="card">
-			<div class="card-icon">🎯</div>
-			<h2>Train Models</h2>
-			<p>Upload your training and test datasets to train SARIMAX and LSTM forecasting models.</p>
+			<h2>Train</h2>
+			<p>Upload your training and test datasets to train ARIMA and LSTM forecasting models.</p>
 			<ul class="features">
-				<li>✓ SARIMAX with weekly seasonality</li>
+				<li>✓ ARIMA with weekly seasonality</li>
 				<li>✓ Multi-step LSTM with time features</li>
 				<li>✓ Performance metrics and comparison</li>
 				<li>✓ Model persistence for reuse</li>
 			</ul>
-			<button class="cta-btn" on:click={() => goto('/training')}>Train Models →</button>
+			<button class="cta-btn" on:click={() => goto('/training')}>Train →</button>
 		</div>
 
 		<div class="card">
-			<div class="card-icon">🔮</div>
-			<h2>Generate Predictions</h2>
+			<h2>Predict</h2>
 			<p>Use your trained LSTM model to generate demand forecasts on new data.</p>
 			<ul class="features">
 				<li>✓ Upload any e-commerce dataset</li>
@@ -36,12 +34,12 @@
 				<li>✓ Downloadable forecast CSV</li>
 				<li>✓ Visual insights and statistics</li>
 			</ul>
-			<button class="cta-btn" on:click={() => goto('/predict')}>Generate Predictions →</button>
+			<button class="cta-btn" on:click={() => goto('/predict')}>Predict →</button>
 		</div>
 	</div>
 
 	<div class="info-section">
-		<h3>How It Works</h3>
+		<h4>How It Works</h4>
 		<div class="steps">
 			<div class="step">
 				<div class="step-num">1</div>
@@ -55,7 +53,7 @@
 				<div class="step-num">2</div>
 				<h4>Train</h4>
 				<p>
-					Upload train and test CSVs in the Training section. The system trains both SARIMAX and
+					Upload train and test CSVs in the Training section. The system trains both ARIMA and
 					LSTM models and compares their performance.
 				</p>
 			</div>
@@ -69,6 +67,47 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Project & Contributors -->
+	<section class="project-section">
+		<h3>Demand Forecasting for E-Commerce Using Python LSTM Models Compared with ARIMA to Enhance Inventory Optimization</h3>
+		<p class="project-desc">Leveraging classical time-series modeling and deep learning to forecast e-commerce demand by benchmarking ARIMA against LSTM, with the explicit intent of identifying accuracy trade-offs under linear versus nonlinear demand dynamics. Implement a Python-based forecasting pipeline that ingests historical sales data, performs statistical stationarity and sequence modeling, and quantitatively compares ARIMA and LSTM outputs to drive data-backed inventory optimization decisions.</p>
+
+		<h4>Contributors & Module assignments</h4>
+		<div class="contributors">
+			<div class="contributor">
+				<div class="contrib-meta">
+					<span class="contrib-name">Shrishesha Narmatesshvara</span>
+					<span class="contrib-id">192321183</span>
+				</div>
+				<div class="contrib-module">Module 3 — LSTM Model</div>
+				<p class="contrib-desc">Responsible for LSTM architecture, training strategy, model persistence, and integration with the API for production forecasting and per-SKU distribution logic.</p>
+			</div>
+
+			<div class="contributor">
+				<div class="contrib-meta">
+					<span class="contrib-name">Anumaneni Somnath</span>
+					<span class="contrib-id">192472386</span>
+				</div>
+				<div class="contrib-module">Module 2 — ARIMA Forecasting</div>
+				<p class="contrib-desc">Focuses on SARIMAX modeling, seasonal and stationarity analysis, model selection, and benchmarking classical methods against LSTM.</p>
+			</div>
+
+			<div class="contributor">
+				<div class="contrib-meta">
+					<span class="contrib-name">K. Pavan Kumar</span>
+					<span class="contrib-id">192212273</span>
+				</div>
+				<div class="contrib-module">Module 1 — Data Preprocessing &amp; Feature Engineering</div>
+				<p class="contrib-desc">Leads data ingestion, cleaning, aggregation and feature engineering (including cyclical time features and handling missing values) that enable both ARIMA and LSTM experiments.</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="course-info">
+		<p class="course-name">Python Programming for Expert Systems</p>
+		<p class="course-code">Course Code: <strong>CSA0804</strong></p>
+	</section>
 
 	<footer>
 		<p>
@@ -136,12 +175,6 @@
 		box-shadow: 0 6px 18px rgba(12, 20, 28, 0.06);
 	}
 
-	.card-icon {
-		font-size: 1.6rem;
-		margin-bottom: 0.5rem;
-		color: #0b1220;
-	}
-
 	.card h2 {
 		font-size: 1.1rem;
 		margin: 0.25rem 0 0.5rem 0;
@@ -163,6 +196,19 @@
 		color: #445569;
 		font-size: 0.92rem;
 	}
+
+	.info-section h4 {
+		font-size: 0.98rem;
+		margin: 0.5rem 0 0.75rem 0;
+		color: #0b1220;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+		background: linear-gradient(90deg, rgba(11,95,255,0.06), rgba(11,95,255,0.02));
+		padding: 0.25rem 0.5rem;
+		border-radius: 6px;
+		display: inline-block;
+	}
+
 
 	.features li { padding: 0.25rem 0; }
 
@@ -244,4 +290,97 @@
 		.cards { grid-template-columns: 1fr; gap: 0.75rem; }
 		.container { padding: 1rem; }
 	}
+
+	/* Project & contributors styling (improved spacing & highlights) */
+	.project-section {
+		background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+		padding: 1.5rem;
+		border-radius: 12px;
+		border: 1px solid #e6eef6;
+		margin-bottom: 1.75rem;
+	}
+	/* Section heading pill */
+	.project-section h3 {
+		display: inline-block;
+		background: #eef6ff;
+		color: #0b5fff;
+		padding: 0.35rem 0.75rem;
+		border-radius: 8px;
+		margin: 0 0 0.6rem 0;
+		font-size: 1.08rem;
+		font-weight: 700;
+	}
+	/* Slightly enhanced h4 for subsection headings */
+	.project-section h4 {
+		font-size: 0.98rem;
+		margin: 0.5rem 0 0.75rem 0;
+		color: #0b1220;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+		background: linear-gradient(90deg, rgba(11,95,255,0.06), rgba(11,95,255,0.02));
+		padding: 0.25rem 0.5rem;
+		border-radius: 6px;
+		display: inline-block;
+	}
+
+	.project-desc {
+		color: #475569;
+		margin-bottom: 1.25rem;
+		line-height: 1.6;
+	}
+	.contributors {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1rem;
+		align-items: start;
+	}
+	.contributor {
+		background: #ffffff;
+		padding: 1.25rem;
+		border-radius: 10px;
+		border: 1px solid #edf2f7;
+		box-shadow: 0 6px 18px rgba(11, 95, 255, 0.04);
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.contrib-meta {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.5rem;
+		margin-bottom: 0.35rem;
+	}
+	.contrib-name {
+		font-weight: 800;
+		color: #0b1220;
+		font-size: 1rem;
+	}
+	.contrib-id {
+		background: #f8fafc;
+		padding: 0.18rem 0.45rem;
+		border-radius: 6px;
+		color: #64748b;
+		font-size: 0.9rem;
+	}
+	.contrib-module {
+		font-weight: 700;
+		color: #0b1220;
+		margin-top: 0.25rem;
+		padding: 0.28rem 0.5rem;
+		background: #f1f9ff;
+		border-radius: 6px;
+		display: inline-block;
+	}
+	.contrib-desc {
+		color: #475569;
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.4;
+	}
+
+	/* Course info */
+	.course-info { text-align: center; margin-top: 1rem; margin-bottom: 0.5rem; }
+	.course-name { font-weight: 700; color: #0b1220; margin: 0; }
+	.course-code { color: #475569; margin: 0; }
 </style>

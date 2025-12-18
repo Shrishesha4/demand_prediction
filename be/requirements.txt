@@ -17,3 +17,6 @@ pytz
 scipy
 six
 tzdata
+fastapi
+python-multipart
+uvicorn[standard]

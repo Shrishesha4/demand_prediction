@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 
 // Read allowed hosts from environment (comma-separated list) so we can configure the domain via compose
 // Example: ALLOWED_HOSTS="pdp.s4home.dpdns.org,localhost"
-const allowedHostsEnv = process.env.ALLOWED_HOSTS || 'pdp.s4home.dpdns.org,localhost,0.0.0.0,::1,127.0.0.1';
+const allowedHostsEnv = process.env.ALLOWED_HOSTS || 'pdp.shrishesha.space,localhost,0.0.0.0,::1,127.0.0.1';
 const parseAllowedHosts = (v: string) => {
 	if (!v) return ['localhost'];
 	if (v === 'all' || v === '*') return 'all' as any;

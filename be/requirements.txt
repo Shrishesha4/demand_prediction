@@ -20,3 +20,4 @@ tzdata
 fastapi
 python-multipart
 uvicorn[standard]
+python-dotenv

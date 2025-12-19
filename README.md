@@ -134,7 +134,7 @@ Notes:
 
 ## Production: pull & run on another host
 
-1. Copy `docker_cloud/.env.example` -> `docker_cloud/.env` and set `BACKEND_IMAGE`, `FRONTEND_IMAGE` and optionally `BACKEND_PORT`/`FRONTEND_PORT` to the images and ports you want to expose.
+1. Copy `docker_cloud/.env.example` -> `.env` at the project root and set `BACKEND_IMAGE`, `FRONTEND_IMAGE` and optionally `BACKEND_PORT`/`FRONTEND_PORT` to the images and ports you want to expose.
 
 2. Pull images & start stack (helper):
 
@@ -160,7 +160,7 @@ Notes:
 
 ## Vite / Frontend host configuration & HMR (dev)
 
-- The preview server reads `ALLOWED_HOSTS` and `HOST` from environment variables. Set these in `docker_cloud/.env` or via environment when running the container.
+- The preview server reads `ALLOWED_HOSTS` and `HOST` from environment variables. Set these in the project root `.env` or via environment when running the container.
 - Example: `ALLOWED_HOSTS=pdp.s4home.dpdns.org,localhost` and `HOST=0.0.0.0`.
 - For development only you can set `ALLOWED_HOSTS=all` but avoid exposing an unrestricted preview server on public networks.
 

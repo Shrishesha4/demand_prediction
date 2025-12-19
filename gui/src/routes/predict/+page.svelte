@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount, afterUpdate } from 'svelte';
 	import {
 		Chart,
 		LineController,
@@ -16,7 +15,6 @@
 		type ChartConfiguration
 	} from 'chart.js';
 
-	// Register Chart.js components
 	Chart.register(
 		LineController,
 		LineElement,
@@ -37,7 +35,6 @@
 	let loading = false;
 	let forecast: any = null;
 	let error = '';
-	// always show 14-day smoothing (no toggle)
 	let chartCanvas: HTMLCanvasElement;
 	let quarterlyChartCanvas: HTMLCanvasElement;
 	let weekdayCanvas: HTMLCanvasElement;
@@ -52,9 +49,6 @@
 	let distributionChart: Chart | null = null;
 	let selectedSku: string = 'all';
 
-	// Use relative API base so calls are proxied through the same host/domain
-	// (when running behind NPM/nginx or Cloudflare). Override with
-	// `VITE_API_BASE` if you need an explicit origin during development.
 	const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 	function handleFileChange(e: Event) {
@@ -94,7 +88,7 @@ const response = await fetch(`${API_BASE}/api/forecast_future`, {
 		console.log('Received forecast data:', data);
 		console.log('total_daily sample:', data.total_daily ? data.total_daily.slice(0,8) : null);
 		forecast = data;
-		selectedSku = data.skus[0]; // Default to first SKU
+		selectedSku = data.skus[0];
 		console.log('Set selectedSku to:', selectedSku);
 		} catch (err: any) {
 			error = err.message || 'An error occurred during forecasting';
@@ -160,17 +154,16 @@ const response = await fetch(`${API_BASE}/api/forecast_future`, {
 
 		console.log('currentData length:', currentData?.length);
 
-		// Destroy existing chart
 		if (chart) {
 			chart.destroy();
 		}
 
 		const dates = currentData.map((item: any) => item.date);
 		const values = currentData.map((item: any) => item.predicted_units);
-		// compute client-side MAs from raw predicted_units to ensure distinct series
+
 		const ma7 = calculateMovingAverage(values, 7);
 		const ma14 = calculateMovingAverage(values, 14);
-		// If backend supplied smoother arrays, compare and log—prefer client calculations for display
+
 		console.log('MA samples (client)', { values: values.slice(0,6), ma7: ma7.slice(0,6), ma14: ma14.slice(0,6) });
 
 		const config: ChartConfiguration = {
@@ -178,7 +171,6 @@ const response = await fetch(`${API_BASE}/api/forecast_future`, {
 			data: {
 				labels: dates,
 				datasets: [
-					// 7-Day Moving Average (subtle)
 					{
 						label: '7-Day Moving Average',
 						data: ma7,
@@ -190,7 +182,6 @@ const response = await fetch(`${API_BASE}/api/forecast_future`, {
 						tension: 0.3,
 						borderDash: [5, 5]
 					},
-					// 14-Day Moving Average (primary smoothing)
 					{
 						label: selectedSku === 'all' ? '14-Day MA (Total)' : `14-Day MA - ${selectedSku}`,
 						data: ma14,
@@ -274,20 +265,15 @@ const response = await fetch(`${API_BASE}/api/forecast_future`, {
 
 		chart = new Chart(chartCanvas, config);
 
-		// Post-create: enforce smoothing styles and ensure MA14 dataset present
 		try {
 			if (chart && chart.data && chart.data.datasets && chart.data.datasets.length > 0) {
-				// enforce no point markers on raw series
 				chart.data.datasets.forEach((d: any, idx: number) => {
 					if (idx === 0) {
-						// raw daily
 						d.pointRadius = 0; d.tension = 0.2; d.cubicInterpolationMode = 'monotone';
 					} else {
 						d.pointRadius = 0; d.tension = d.tension ?? 0.35; d.cubicInterpolationMode = d.cubicInterpolationMode ?? 'monotone';
 					}
 				});
-
-				// If ma14 is missing as a dataset, attempt to add from data
 				const hasMA14 = chart.data.datasets.some((ds: any) => ds.label && ds.label.toString().includes('14-Day'));
 				if (!hasMA14) {
 					const ma14 = currentData.map((item: any) => item.ma14 !== undefined ? item.ma14 : null);
@@ -325,7 +311,6 @@ const response = await fetch(`${API_BASE}/api/forecast_future`, {
 		const quarterlyData = forecast.forecasts[selectedSku].quarterly;
 		console.log('quarterlyData:', quarterlyData);
 
-		// Destroy existing chart
 		if (quarterlyChart) {
 			quarterlyChart.destroy();
 		}
@@ -518,7 +503,6 @@ const response = await fetch(`${API_BASE}/api/forecast_future`, {
 		};
 
 		skuComparisonChart = new Chart(skuComparisonCanvas, cfg);
-		// Post-adjustment: remove point markers and slightly smooth lines
 		try {
 			if (skuComparisonChart && skuComparisonChart.data && skuComparisonChart.data.datasets) {
 				skuComparisonChart.data.datasets.forEach((d: any) => { d.pointRadius = 0; d.tension = 0.15; d.cubicInterpolationMode = 'monotone'; });
@@ -534,10 +518,8 @@ const response = await fetch(`${API_BASE}/api/forecast_future`, {
 
 		const dailyData = forecast.forecasts[selectedSku].daily;
 		const values = dailyData.map((d: any) => d.predicted_units);
-		// compute smoothed series for distribution (use MA14 to reduce noise)
 		const ma14_for_dist = calculateMovingAverage(values, 14);
 
-		// Create histogram bins
 		const min = Math.min(...values);
 		const max = Math.max(...values);
 		const binCount = 15;
@@ -585,13 +567,11 @@ const response = await fetch(`${API_BASE}/api/forecast_future`, {
 		distributionChart = new Chart(distributionCanvas, cfg);
 	}
 
-	// Re-render charts when forecast or SKU changes
 	$: if (forecast && chartCanvas) {
 		console.log('Reactive: calling renderChart');
 		setTimeout(() => renderChart(), 0);
 	}
 
-	// Re-render when smoothing toggle changes
 	$: if (forecast && chartCanvas) { setTimeout(() => renderChart(), 0); }
 
 	$: if (forecast && quarterlyChartCanvas && selectedSku !== 'all') {
@@ -710,24 +690,20 @@ const response = await fetch(`${API_BASE}/api/forecast_future`, {
 					</div>
 				</div>
 
-				<!-- Quarterly Bar Chart -->
 				<div class="chart-container">
 					<canvas bind:this={quarterlyChartCanvas}></canvas>
 				</div>
 			{/if}
 
-			<!-- Daily Forecast Line Chart -->
 			<div class="chart-container">
 				<canvas bind:this={chartCanvas}></canvas>
 			</div>
 
-			<!-- SKU Comparison Chart (all SKUs) -->
 			<div class="chart-container">
 				<canvas bind:this={skuComparisonCanvas}></canvas>
 			</div>
 
 			{#if selectedSku !== 'all'}
-				<!-- Additional Analysis Charts -->
 				<div class="charts-grid">
 					<div class="chart-container-small">
 						<canvas bind:this={weekdayCanvas}></canvas>

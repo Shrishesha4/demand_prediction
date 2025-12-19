@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Run A/B variants of the synthetic dataset generation and produce EDA outputs for each.
 
 Generates two variants:
@@ -12,7 +11,7 @@ Outputs are saved as:
 import subprocess
 import sys
 from pathlib import Path
-from generate_lib import generate_dataset
+from be.scripts.generate_lib import generate_dataset
 
 ROOT = Path(__file__).resolve().parent
 EDA_SCRIPT = ROOT / "eda_ecommerce.py"
@@ -21,7 +20,7 @@ variants = {
     "A": {
         "desc": "Tight prices, strong reversion",
         "params": {
-            "base_price_scale": 100.0,  # scale USD-like base to INR
+            "base_price_scale": 100.0,
             "price_min_factor": {"SKU_001": 0.9, "SKU_002": 0.9, "SKU_003": 0.88},
             "price_max_factor": {"SKU_001": 1.1, "SKU_002": 1.1, "SKU_003": 1.12},
             "reversion_rate": {"SKU_001": 0.06, "SKU_002": 0.06, "SKU_003": 0.05},
@@ -56,7 +55,6 @@ for name, v in variants.items():
     generate_dataset(out_file=str(out_csv), seed=42, variant_params=v["params"], currency="INR", variant_name=name, n_locations=9)
     artifacts.append(str(out_csv))
 
-    # Run EDA for this variant
     out_dir = ROOT / "eda_outputs" / f"variant_{name}"
     out_dir.mkdir(parents=True, exist_ok=True)
     print(f"Running EDA for variant {name} -> {out_dir}")

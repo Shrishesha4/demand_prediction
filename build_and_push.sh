@@ -11,13 +11,10 @@ set -euo pipefail
 #   BACKEND_IMAGE=ghcr.io/me/api FRONTEND_IMAGE=ghcr.io/me/gui ./build_and_push.sh
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# Allow an optional .env in repo root
 if [[ -f "${SCRIPT_DIR}/.env" ]]; then
-  # shellcheck disable=SC1091
   source "${SCRIPT_DIR}/.env"
 fi
 
-# Defaults / flags
 NO_PUSH=false
 BUILD_BACKEND=true
 BUILD_FRONTEND=true
@@ -42,25 +39,17 @@ for arg in "${@-}"; do
   esac
 done
 
-# Derive image names (sensible defaults so script runs without env vars)
 IMAGE_BASE=${IMAGE:-}
 BACKEND_IMAGE=${BACKEND_IMAGE:-${IMAGE_BASE:-demand-api}:latest}
 FRONTEND_IMAGE=${FRONTEND_IMAGE:-${IMAGE_BASE:-demand-frontend}-frontend:latest}
 
-# Infer directories
 BE_DIR="${SCRIPT_DIR}/be"
 FRONTEND_DIR="${SCRIPT_DIR}/gui"
 
-# If user provided only BACKEND_IMAGE but not FRONTEND_IMAGE above, ensure frontend
-# uses a related tag when IMAGE_BASE isn't set.
 if [[ -n "${BACKEND_IMAGE:-}" && -z "${FRONTEND_IMAGE:-}" ]]; then
   FRONTEND_IMAGE="${BACKEND_IMAGE%:*}-frontend:${BACKEND_IMAGE#*:}"
 fi
 
-# If we're going to push, require that image names contain a namespace (username/)
-# to avoid accidentally attempting to push to the `library/` namespace on Docker Hub
-# which typically requires special permissions. You can still build locally with
-# --no-push which allows unnamespaced images.
 if [[ "$NO_PUSH" != "true" ]]; then
   for var in BACKEND_IMAGE FRONTEND_IMAGE; do
     img="${!var}"
@@ -72,19 +61,16 @@ if [[ "$NO_PUSH" != "true" ]]; then
   done
 fi
 
-# ensure Docker daemon is available
 if ! docker info >/dev/null 2>&1; then
   echo "Docker daemon not running. Please start Docker Desktop or run 'colima start --with-docker'."
   exit 1
 fi
 
-# detect whether buildx is available; if not, fall back to regular docker build
 USE_BUILDX=true
 if ! docker buildx version >/dev/null 2>&1; then
   echo "Warning: docker buildx not available — falling back to single-arch docker build/push"
   USE_BUILDX=false
 else
-  # Create or use an existing buildx builder in an idempotent way to avoid noisy errors
   if ! docker buildx inspect multiarch-builder >/dev/null 2>&1; then
     docker buildx create --name multiarch-builder --use || true
   else
@@ -118,7 +104,6 @@ build_and_maybe_push() {
   fi
 }
 
-# Build backend
 if [[ "$BUILD_BACKEND" == "true" ]]; then
   if [[ ! -f "${BE_DIR}/Dockerfile" ]]; then
     echo "Backend Dockerfile not found at ${BE_DIR}/Dockerfile"
@@ -128,7 +113,6 @@ if [[ "$BUILD_BACKEND" == "true" ]]; then
   build_and_maybe_push "${BE_DIR}" "${BE_DIR}/Dockerfile" "${BACKEND_IMAGE}"
 fi
 
-# Build frontend
 if [[ "$BUILD_FRONTEND" == "true" ]]; then
   if [[ ! -f "${FRONTEND_DIR}/Dockerfile.prod" ]]; then
     echo "Frontend Dockerfile not found at ${FRONTEND_DIR}/Dockerfile.prod"
@@ -138,7 +122,6 @@ if [[ "$BUILD_FRONTEND" == "true" ]]; then
   build_and_maybe_push "${FRONTEND_DIR}" "${FRONTEND_DIR}/Dockerfile.prod" "${FRONTEND_IMAGE}"
 fi
 
-# Provide next steps
 if [[ "$NO_PUSH" == "true" ]]; then
   echo "Built images locally. You can run them with your docker-compose files or tag+push manually."
 else

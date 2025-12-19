@@ -2,13 +2,18 @@ import logging
 import tempfile
 import shutil
 from pathlib import Path
+from dotenv import load_dotenv
 
+env_path = Path(__file__).resolve().parents[1] / ".env"
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path)
+    
 import pandas as pd
 from fastapi import FastAPI, File, UploadFile, HTTPException, Form
 from fastapi.responses import JSONResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from forecast_pipeline import (
+from core.forecast_pipeline import (
     load_and_aggregate,
     train_and_forecast_sarimax_on_train_test,
     train_and_forecast_lstm_on_train_test,
@@ -22,6 +27,7 @@ from forecast_pipeline import (
     BATCH_SIZE,
 )
 
+import os
 import joblib
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
@@ -30,9 +36,33 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="E-commerce Demand Forecasting API", version="1.0.0")
 
+def _normalize_origin(u: str) -> str:
+    if not u:
+        return u
+    u = u.strip()
+    if not u:
+        return None
+    if '://' not in u:
+        u = 'https://' + u
+    return u
+
+_allowed = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://localhost:8080",
+]
+_frontend_env = os.environ.get("FRONTEND_URL")
+if _frontend_env:
+    for part in _frontend_env.split(','):
+        o = _normalize_origin(part)
+        if o:
+            _allowed.append(o)
+
+logger.info("CORS allowed origins: %s", _allowed)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000", "http://localhost:8080"],
+    allow_origins=_allowed,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -14,17 +14,15 @@ if [[ ! -f "$COMPOSE_FILE" ]]; then
   exit 1
 fi
 
-# Load .env if present in docker_cloud
-if [[ -f "${ROOT_DIR}/docker_cloud/.env" ]]; then
-  # shellcheck disable=SC1091
-  source "${ROOT_DIR}/docker_cloud/.env"
+if [[ -f "${ROOT_DIR}/.env" ]]; then
+  source "${ROOT_DIR}/.env"
 fi
 
 : ${BACKEND_IMAGE:="${BACKEND_IMAGE:-}"}
 : ${FRONTEND_IMAGE:="${FRONTEND_IMAGE:-}"}
 
 if [[ -z "$BACKEND_IMAGE" || -z "$FRONTEND_IMAGE" ]]; then
-  echo "Please set BACKEND_IMAGE and FRONTEND_IMAGE environment variables or add them to docker_cloud/.env"
+  echo "Please set BACKEND_IMAGE and FRONTEND_IMAGE environment variables or add them to the project root .env"
   echo "Example: BACKEND_IMAGE=shrishesha4/df:latest FRONTEND_IMAGE=shrishesha4/df-frontend:latest ./scripts/pull_and_run.sh"
   exit 1
 fi

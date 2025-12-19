@@ -12,7 +12,7 @@ services:
     ports:
       - "${BACKEND_PORT:-8000}:8000"
     volumes:
-      - ./be:/app:delegated   # mount local code for fast iteration
+      - ./be:/app:delegated
     environment:
       - PYTHONUNBUFFERED=1
     healthcheck:
@@ -30,7 +30,6 @@ services:
     restart: unless-stopped
     ports:
       - "${FRONTEND_PORT:-5173}:80"
-    # Domain(s) allowed to access the preview server (comma-separated), or set to 'all' to allow any host
     environment:
       ALLOWED_HOSTS: pdp.shrishesha.space
 

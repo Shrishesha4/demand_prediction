@@ -12,7 +12,6 @@
 		type ChartConfiguration
 	} from 'chart.js';
 
-	// Register Chart.js components
 	Chart.register(BarController, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
 	let trainFile: File | null = null;
@@ -24,9 +23,6 @@
 	let chartCanvas: HTMLCanvasElement;
 	let chart: Chart | null = null;
 
-	// Use relative API base so calls are proxied through the same host/domain
-	// (when running behind NPM/nginx or Cloudflare). Override with
-	// `VITE_API_BASE` if you need an explicit origin during development.
 	const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 	function handleTrainFileChange(e: Event) {
@@ -101,7 +97,6 @@ const response = await fetch(`${API_BASE}/api/model/download`);
 	function renderComparisonChart() {
 		if (!metrics || !chartCanvas) return;
 
-		// Destroy existing chart
 		if (chart) {
 			chart.destroy();
 		}
@@ -180,7 +175,6 @@ const response = await fetch(`${API_BASE}/api/model/download`);
 		chart = new Chart(chartCanvas, config);
 	}
 
-	// Re-render chart when metrics change
 	$: if (metrics && chartCanvas) {
 		renderComparisonChart();
 	}
@@ -256,7 +250,6 @@ const response = await fetch(`${API_BASE}/api/model/download`);
 		<div class="results">
 			<h2>Training Results</h2>
 
-			<!-- Interactive Comparison Chart -->
 			<div class="chart-container">
 				<canvas bind:this={chartCanvas}></canvas>
 			</div>

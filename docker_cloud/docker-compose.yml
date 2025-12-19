@@ -2,7 +2,6 @@
 # Usage (on the host where you want to deploy):
 #   BACKEND_IMAGE=your/repo:tag FRONTEND_IMAGE=your/repo-frontend:tag docker compose -f docker_cloud/docker-compose.yml up -d
 # You can override ports with BACKEND_PORT and FRONTEND_PORT environment variables.
-version: "3.9"
 
 services:
   demand-api:
@@ -37,20 +36,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-    # Example deploy config for Docker Swarm / cloud (optional)
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 256M
-
-# Optional: define networks if you want explicit control
-#networks:
-#  frontend_net:
-#    driver: bridge
 
 # Usage notes:
 # - Set ALLOWED_HOSTS and HOST via environment or an .env file when deploying to cloud.

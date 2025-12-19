@@ -358,11 +358,15 @@ async def forecast_future(
                     promo_any = 0
 
                     window = current_window.reshape(1, N_IN, len(feature_cols))
-                    pred_scaled = lstm_model.predict(window, verbose=0)[0, 0]
-                    pred_vector_scaled = np.array([[pred_scaled, avg_price, promo_any, dow_sin, dow_cos, doy_sin, doy_cos]])
-                    pred_vector_actual = scaler.inverse_transform(pred_vector_scaled)
-                    pred = pred_vector_actual[0, 0]
-                    new_row_scaled = scaler.transform([[pred, avg_price, promo_any, dow_sin, dow_cos, doy_sin, doy_cos]])[0]
+                    pred_scaled = float(lstm_model.predict(window, verbose=0)[0, 0])
+                    # Build a raw feature row (target placeholder 0) and scale it, then insert scaled prediction
+                    raw_row = [0.0, avg_price, promo_any, dow_sin, dow_cos, doy_sin, doy_cos]
+                    scaled_row = scaler.transform([raw_row])[0]
+                    # Replace the target column in the scaled row with the model's scaled prediction and inverse-transform
+                    scaled_row[0] = pred_scaled
+                    pred = float(scaler.inverse_transform([scaled_row])[0][0])
+                    # Use the scaled row (with predicted scaled target) as the next window input
+                    new_row_scaled = scaled_row.copy()
 
                     future_predictions.append({
                         'date': future_date.strftime('%Y-%m-%d'),

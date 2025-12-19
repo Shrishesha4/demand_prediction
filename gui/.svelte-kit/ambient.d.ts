@@ -27,23 +27,21 @@
  */
 declare module '$env/static/private' {
 	export const LDFLAGS: string;
-	export const HMR_PORT: string;
 	export const TERM_PROGRAM: string;
 	export const NODE: string;
 	export const INIT_CWD: string;
-	export const ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR: string;
 	export const GEMINI_CLI_IDE_WORKSPACE_PATH: string;
-	export const SHELL: string;
+	export const ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR: string;
 	export const TERM: string;
-	export const HOST: string;
-	export const TMPDIR: string;
-	export const HOMEBREW_REPOSITORY: string;
+	export const SHELL: string;
 	export const CPPFLAGS: string;
+	export const HOMEBREW_REPOSITORY: string;
+	export const TMPDIR: string;
 	export const npm_config_global_prefix: string;
-	export const TERM_PROGRAM_VERSION: string;
 	export const VSCODE_PYTHON_AUTOACTIVATE_GUARD: string;
-	export const MallocNanoZone: string;
+	export const TERM_PROGRAM_VERSION: string;
 	export const ZDOTDIR: string;
+	export const MallocNanoZone: string;
 	export const COLOR: string;
 	export const npm_config_noproxy: string;
 	export const npm_config_local_prefix: string;
@@ -51,12 +49,10 @@ declare module '$env/static/private' {
 	export const USER: string;
 	export const COMMAND_MODE: string;
 	export const npm_config_globalconfig: string;
-	export const HMR_PROTOCOL: string;
 	export const SSH_AUTH_SOCK: string;
-	export const __CF_USER_TEXT_ENCODING: string;
 	export const VSCODE_PROFILE_INITIALIZED: string;
+	export const __CF_USER_TEXT_ENCODING: string;
 	export const npm_execpath: string;
-	export const VIRTUAL_ENV: string;
 	export const PYDEVD_DISABLE_FILE_VALIDATION: string;
 	export const PATH: string;
 	export const npm_package_json: string;
@@ -64,47 +60,42 @@ declare module '$env/static/private' {
 	export const _: string;
 	export const npm_config_userconfig: string;
 	export const npm_config_init_module: string;
-	export const __CFBundleIdentifier: string;
 	export const USER_ZDOTDIR: string;
+	export const __CFBundleIdentifier: string;
 	export const npm_command: string;
 	export const PWD: string;
-	export const HMR_CLIENT_PORT: string;
 	export const npm_lifecycle_event: string;
 	export const EDITOR: string;
 	export const npm_package_name: string;
 	export const LANG: string;
 	export const PYTHONSTARTUP: string;
 	export const BUNDLED_DEBUGPY_PATH: string;
-	export const HMR_BIND_HOST: string;
 	export const npm_config_npm_version: string;
-	export const XPC_FLAGS: string;
 	export const VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
+	export const XPC_FLAGS: string;
 	export const npm_config_node_gyp: string;
 	export const GEMINI_CLI_IDE_AUTH_TOKEN: string;
 	export const npm_package_version: string;
 	export const XPC_SERVICE_NAME: string;
-	export const VSCODE_DEBUGPY_ADAPTER_ENDPOINTS: string;
 	export const VSCODE_INJECTION: string;
-	export const HOME: string;
-	export const SHLVL: string;
+	export const VSCODE_DEBUGPY_ADAPTER_ENDPOINTS: string;
 	export const PYENV_SHELL: string;
+	export const SHLVL: string;
+	export const HOME: string;
 	export const VSCODE_GIT_ASKPASS_MAIN: string;
 	export const PYTHON_BASIC_REPL: string;
-	export const IMAGE: string;
 	export const HOMEBREW_PREFIX: string;
 	export const npm_config_cache: string;
 	export const LOGNAME: string;
 	export const npm_lifecycle_script: string;
 	export const VSCODE_GIT_IPC_HANDLE: string;
-	export const FRONTEND_URL: string;
 	export const GEMINI_CLI_IDE_SERVER_PORT: string;
 	export const npm_config_user_agent: string;
-	export const HOMEBREW_CELLAR: string;
-	export const INFOPATH: string;
-	export const GIT_ASKPASS: string;
 	export const VSCODE_GIT_ASKPASS_NODE: string;
+	export const GIT_ASKPASS: string;
+	export const INFOPATH: string;
+	export const HOMEBREW_CELLAR: string;
 	export const OSLogRateLimit: string;
-	export const VIRTUAL_ENV_PROMPT: string;
 	export const npm_node_execpath: string;
 	export const npm_config_prefix: string;
 	export const COLORTERM: string;
@@ -121,7 +112,7 @@ declare module '$env/static/private' {
  * ```
  */
 declare module '$env/static/public' {
-	export const PUBLIC_HOST: string;
+	
 }
 
 /**
@@ -139,23 +130,21 @@ declare module '$env/static/public' {
 declare module '$env/dynamic/private' {
 	export const env: {
 		LDFLAGS: string;
-		HMR_PORT: string;
 		TERM_PROGRAM: string;
 		NODE: string;
 		INIT_CWD: string;
-		ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR: string;
 		GEMINI_CLI_IDE_WORKSPACE_PATH: string;
-		SHELL: string;
+		ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR: string;
 		TERM: string;
-		HOST: string;
-		TMPDIR: string;
-		HOMEBREW_REPOSITORY: string;
+		SHELL: string;
 		CPPFLAGS: string;
+		HOMEBREW_REPOSITORY: string;
+		TMPDIR: string;
 		npm_config_global_prefix: string;
-		TERM_PROGRAM_VERSION: string;
 		VSCODE_PYTHON_AUTOACTIVATE_GUARD: string;
-		MallocNanoZone: string;
+		TERM_PROGRAM_VERSION: string;
 		ZDOTDIR: string;
+		MallocNanoZone: string;
 		COLOR: string;
 		npm_config_noproxy: string;
 		npm_config_local_prefix: string;
@@ -163,12 +152,10 @@ declare module '$env/dynamic/private' {
 		USER: string;
 		COMMAND_MODE: string;
 		npm_config_globalconfig: string;
-		HMR_PROTOCOL: string;
 		SSH_AUTH_SOCK: string;
-		__CF_USER_TEXT_ENCODING: string;
 		VSCODE_PROFILE_INITIALIZED: string;
+		__CF_USER_TEXT_ENCODING: string;
 		npm_execpath: string;
-		VIRTUAL_ENV: string;
 		PYDEVD_DISABLE_FILE_VALIDATION: string;
 		PATH: string;
 		npm_package_json: string;
@@ -176,47 +163,42 @@ declare module '$env/dynamic/private' {
 		_: string;
 		npm_config_userconfig: string;
 		npm_config_init_module: string;
-		__CFBundleIdentifier: string;
 		USER_ZDOTDIR: string;
+		__CFBundleIdentifier: string;
 		npm_command: string;
 		PWD: string;
-		HMR_CLIENT_PORT: string;
 		npm_lifecycle_event: string;
 		EDITOR: string;
 		npm_package_name: string;
 		LANG: string;
 		PYTHONSTARTUP: string;
 		BUNDLED_DEBUGPY_PATH: string;
-		HMR_BIND_HOST: string;
 		npm_config_npm_version: string;
-		XPC_FLAGS: string;
 		VSCODE_GIT_ASKPASS_EXTRA_ARGS: string;
+		XPC_FLAGS: string;
 		npm_config_node_gyp: string;
 		GEMINI_CLI_IDE_AUTH_TOKEN: string;
 		npm_package_version: string;
 		XPC_SERVICE_NAME: string;
-		VSCODE_DEBUGPY_ADAPTER_ENDPOINTS: string;
 		VSCODE_INJECTION: string;
-		HOME: string;
-		SHLVL: string;
+		VSCODE_DEBUGPY_ADAPTER_ENDPOINTS: string;
 		PYENV_SHELL: string;
+		SHLVL: string;
+		HOME: string;
 		VSCODE_GIT_ASKPASS_MAIN: string;
 		PYTHON_BASIC_REPL: string;
-		IMAGE: string;
 		HOMEBREW_PREFIX: string;
 		npm_config_cache: string;
 		LOGNAME: string;
 		npm_lifecycle_script: string;
 		VSCODE_GIT_IPC_HANDLE: string;
-		FRONTEND_URL: string;
 		GEMINI_CLI_IDE_SERVER_PORT: string;
 		npm_config_user_agent: string;
-		HOMEBREW_CELLAR: string;
-		INFOPATH: string;
-		GIT_ASKPASS: string;
 		VSCODE_GIT_ASKPASS_NODE: string;
+		GIT_ASKPASS: string;
+		INFOPATH: string;
+		HOMEBREW_CELLAR: string;
 		OSLogRateLimit: string;
-		VIRTUAL_ENV_PROMPT: string;
 		npm_node_execpath: string;
 		npm_config_prefix: string;
 		COLORTERM: string;
@@ -238,7 +220,6 @@ declare module '$env/dynamic/private' {
  */
 declare module '$env/dynamic/public' {
 	export const env: {
-		PUBLIC_HOST: string;
 		[key: `PUBLIC_${string}`]: string | undefined;
 	}
 }

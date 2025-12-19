@@ -52,7 +52,10 @@
 	let distributionChart: Chart | null = null;
 	let selectedSku: string = 'all';
 
-	const API_BASE = 'http://localhost:8000';
+	// Use relative API base so calls are proxied through the same host/domain
+	// (when running behind NPM/nginx or Cloudflare). Override with
+	// `VITE_API_BASE` if you need an explicit origin during development.
+	const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 	function handleFileChange(e: Event) {
 		const target = e.target as HTMLInputElement;
@@ -77,7 +80,7 @@
 			formData.append('quarters', quarters.toString());
 			formData.append('model_type', selectedModel);
 
-			const response = await fetch(`${API_BASE}/forecast_future`, {
+const response = await fetch(`${API_BASE}/api/forecast_future`, {
 				method: 'POST',
 				body: formData
 			});

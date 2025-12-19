@@ -1,12 +1,15 @@
+# This compose file is intended for cloud/remote hosts and pulls pre-built images from a registry.
+# Usage (on the host where you want to deploy):
+#   BACKEND_IMAGE=your/repo:tag FRONTEND_IMAGE=your/repo-frontend:tag docker compose -f docker_cloud/docker-compose.yml up -d
+# You can override ports with BACKEND_PORT and FRONTEND_PORT environment variables.
 version: "3.9"
 
 services:
   demand-api:
     image: "${BACKEND_IMAGE:-shrishesha4/df:latest}"
-    container_name: demand-api
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "${BACKEND_PORT:-8000}:8000"
     environment:
       - PYTHONUNBUFFERED=1
     healthcheck:
@@ -20,10 +23,9 @@ services:
 
   frontend:
     image: "${FRONTEND_IMAGE:-shrishesha4/df-frontend:latest}"
-    container_name: demand-frontend
     restart: unless-stopped
     ports:
-      - "3030:80"
+      - "${FRONTEND_PORT:-5173}:80"
     environment:
       # Comma-separated allowed hosts (e.g. "example.com,localhost"), or 'all' to allow any host
       - ALLOWED_HOSTS=${ALLOWED_HOSTS:-pdp.shrishesha.space}

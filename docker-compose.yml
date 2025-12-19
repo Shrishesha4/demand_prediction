@@ -1,32 +1,35 @@
+# This compose file is intended for local development: it builds images from local source and mounts source for fast iteration.
+# Usage (local dev):
+#   docker compose up --build
+# To override image names/ports use BACKEND_IMAGE/FRONTEND_IMAGE/BACKEND_PORT/FRONTEND_PORT environment variables.
 services:
   demand-api:
     build:
       context: ./be
       dockerfile: Dockerfile
-    container_name: demand-api-dev
     restart: unless-stopped
+    image: ${BACKEND_IMAGE:-demand-api:latest}
     ports:
-      - "8000:8000"
+      - "${BACKEND_PORT:-8000}:8000"
     volumes:
       - ./be:/app:delegated   # mount local code for fast iteration
     environment:
       - PYTHONUNBUFFERED=1
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "curl", "-f", "http://${BACKEND_PORT:-8000}/health"]
       interval: 30s
       timeout: 10s
       retries: 5
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn main:app --host 0.0.0.0 --port ${BACKEND_PORT:-8000} --reload
 
   frontend:
     build:
       context: ./gui
       dockerfile: Dockerfile.prod
-    image: demand-frontend:latest
-    container_name: demand-frontend
+    image: ${FRONTEND_IMAGE:-demand-frontend:latest}
     restart: unless-stopped
     ports:
-      - "3030:80"
+      - "${FRONTEND_PORT:-5173}:80"
     # Domain(s) allowed to access the preview server (comma-separated), or set to 'all' to allow any host
     environment:
       ALLOWED_HOSTS: pdp.shrishesha.space

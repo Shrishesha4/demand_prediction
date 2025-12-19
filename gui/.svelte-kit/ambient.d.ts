@@ -26,11 +26,13 @@
  * ```
  */
 declare module '$env/static/private' {
+	export const HMR_PORT: string;
 	export const LDFLAGS: string;
 	export const TERM_PROGRAM: string;
 	export const NODE: string;
 	export const INIT_CWD: string;
 	export const ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR: string;
+	export const HOST: string;
 	export const TERM: string;
 	export const SHELL: string;
 	export const CPPFLAGS: string;
@@ -44,6 +46,7 @@ declare module '$env/static/private' {
 	export const npm_config_local_prefix: string;
 	export const USER: string;
 	export const npm_config_globalconfig: string;
+	export const HMR_PROTOCOL: string;
 	export const SSH_AUTH_SOCK: string;
 	export const __CF_USER_TEXT_ENCODING: string;
 	export const npm_execpath: string;
@@ -92,7 +95,7 @@ declare module '$env/static/private' {
  * ```
  */
 declare module '$env/static/public' {
-	
+	export const PUBLIC_HOST: string;
 }
 
 /**
@@ -109,11 +112,13 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
+		HMR_PORT: string;
 		LDFLAGS: string;
 		TERM_PROGRAM: string;
 		NODE: string;
 		INIT_CWD: string;
 		ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR: string;
+		HOST: string;
 		TERM: string;
 		SHELL: string;
 		CPPFLAGS: string;
@@ -127,6 +132,7 @@ declare module '$env/dynamic/private' {
 		npm_config_local_prefix: string;
 		USER: string;
 		npm_config_globalconfig: string;
+		HMR_PROTOCOL: string;
 		SSH_AUTH_SOCK: string;
 		__CF_USER_TEXT_ENCODING: string;
 		npm_execpath: string;
@@ -180,6 +186,7 @@ declare module '$env/dynamic/private' {
  */
 declare module '$env/dynamic/public' {
 	export const env: {
+		PUBLIC_HOST: string;
 		[key: `PUBLIC_${string}`]: string | undefined;
 	}
 }

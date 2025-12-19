@@ -15,11 +15,21 @@ const allowedHosts = parseAllowedHosts(allowedHostsEnv);
 // Allow the HOST env var to control interface binding; default to listening on all interfaces
 const hostBinding: boolean | string = process.env.HOST ? process.env.HOST : true;
 
+// Public host used by HMR clients (set to your proxied domain when behind reverse proxy)
+const publicHost = process.env.PUBLIC_HOST || 'pdp.shrishesha.space';
+const hmrProtocol = process.env.HMR_PROTOCOL || (process.env.HTTPS ? 'wss' : 'ws');
+const hmrPort = process.env.HMR_PORT ? Number(process.env.HMR_PORT) : (process.env.HTTPS ? 443 : 5173);
+
 export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
 	server: {
 		host: hostBinding,
 		allowedHosts: allowedHosts as any,
+		hmr: {
+			protocol: hmrProtocol as any,
+			host: process.env.HMR_HOST || publicHost,
+			port: hmrPort,
+		},
 	},
 	preview: {
 		host: hostBinding,

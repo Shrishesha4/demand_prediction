@@ -56,13 +56,15 @@ python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
 ### Frontend (dev)
 
-1. Install dependencies and run dev server:
+1. Install dependencies and run dev server (the GUI will respect the project root `.env` automatically):
 
 ```bash
 cd gui
 npm i
 npm run dev
 ```
+
+> The `gui` dev scripts now load environment variables from the project root `.env` (via `dotenv-cli`) so `HMR_PROTOCOL`, `FRONTEND_URL`, `HMR_CLIENT_PORT`, etc. are applied when present.
 
 2. Open the UI at `http://localhost:5173` (or the printed host/port). The dev server will accept configured hostnames via `ALLOWED_HOSTS` (see the Vite section below).
 

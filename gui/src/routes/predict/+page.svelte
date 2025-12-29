@@ -37,7 +37,6 @@
 
 	let dataFile: File | null = null;
 	let quarters = 4;
-	let selectedModel: 'lstm' | 'sarimax' = 'lstm';
 	let loading = false;
 	let forecast: any = null;
 	let error = '';
@@ -115,7 +114,8 @@
 			const formData = new FormData();
 			formData.append('data_file', dataFile);
 			formData.append('quarters', quarters.toString());
-			formData.append('model_type', selectedModel);
+			// Backend now defaults to hybrid, but we send it for legacy compat if needed or just omit
+			formData.append('model_type', 'hybrid');
 
 const response = await fetch(`${API_BASE}/api/forecast_future`, {
 				method: 'POST',
@@ -746,13 +746,6 @@ function adjustChartYAxis(chart:any, values:any[], ma7:any[], ma14:any[]) {
 
 		<div class="options-row">
 			<label class="option-item">
-				<span class="option-label">Forecast Model:</span>
-				<select bind:value={selectedModel} disabled={loading} class="model-select">
-					<option value="lstm">LSTM</option>
-					<option value="sarimax">ARIMA</option>
-				</select>
-			</label>
-			<label class="option-item">
 				<span class="option-label">Number of Quarters:</span>
 				<input type="number" min="1" max="8" bind:value={quarters} disabled={loading} />
 			</label>
@@ -817,7 +810,7 @@ function adjustChartYAxis(chart:any, values:any[], ma7:any[], ma14:any[]) {
 				<canvas bind:this={chartCanvas}></canvas>
 			</div>
 
-			{#if selectedExplanation && selectedModel === 'lstm'}
+			{#if selectedExplanation}
 				<ExplanationCard explanation={selectedExplanation} />
 			{/if}
 

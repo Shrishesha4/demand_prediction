@@ -58,7 +58,7 @@ def set_global_seed(seed: int = DEFAULT_SEED):
 
 def load_and_aggregate(csv_path: str, sku_filter: str | None = None) -> pd.DataFrame:
 
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv(csv_path, low_memory=False)
     
     # Normalize column names (lowercase, strip whitespace)
     df.columns = df.columns.str.strip().str.lower()
@@ -76,6 +76,7 @@ def load_and_aggregate(csv_path: str, sku_filter: str | None = None) -> pd.DataF
         'product_id': 'sku_id',
         'item_id': 'sku_id',
         'product': 'sku_id',
+        'category': 'sku_id',  # Amazon dataset uses Category
         # units variations
         'units_sold': 'units_sold',
         'units': 'units_sold',
@@ -89,6 +90,7 @@ def load_and_aggregate(csv_path: str, sku_filter: str | None = None) -> pd.DataF
         'unit_price': 'price',
         'avg_price': 'price',
         'cost': 'price',
+        'amount': 'price',
         # promo variations
         'promotion_flag': 'promotion_flag',
         'promo_flag': 'promotion_flag',
@@ -96,6 +98,9 @@ def load_and_aggregate(csv_path: str, sku_filter: str | None = None) -> pd.DataF
         'promotion': 'promotion_flag',
         'is_promo': 'promotion_flag',
         'on_promotion': 'promotion_flag',
+        'promotion-ids': 'promotion_flag',
+        # status (for filtering)
+        'status': 'status',
     }
     
     # Apply column mapping
@@ -105,11 +110,28 @@ def load_and_aggregate(csv_path: str, sku_filter: str | None = None) -> pd.DataF
             new_columns[col] = column_mapping[col]
     df = df.rename(columns=new_columns)
     
+    # Handle Amazon Sale Report format specifically
+    # Filter for shipped/delivered orders only (not cancelled)
+    if 'status' in df.columns:
+        valid_statuses = ['shipped', 'shipped - delivered to buyer', 'delivered', 'pending']
+        df['status_lower'] = df['status'].astype(str).str.lower().str.strip()
+        df = df[df['status_lower'].str.contains('shipped|delivered|pending', case=False, na=False)]
+        df = df.drop(columns=['status_lower'], errors='ignore')
+    
     # Check required columns exist
-    required_cols = ['date', 'units_sold']
+    required_cols = ['date']
     missing = [c for c in required_cols if c not in df.columns]
     if missing:
         raise ValueError(f"Missing required columns: {missing}. Found columns: {list(df.columns)}")
+    
+    # Handle units_sold - use qty or default to 1 per order
+    if 'units_sold' not in df.columns:
+        df['units_sold'] = 1  # Each row is one order
+    
+    # Convert units_sold to numeric, coercing errors
+    df['units_sold'] = pd.to_numeric(df['units_sold'], errors='coerce').fillna(1).astype(int)
+    # Filter out zero or negative quantities
+    df = df[df['units_sold'] > 0]
     
     # Add default sku_id if not present
     if 'sku_id' not in df.columns:
@@ -118,13 +140,23 @@ def load_and_aggregate(csv_path: str, sku_filter: str | None = None) -> pd.DataF
     # Add default price if not present
     if 'price' not in df.columns:
         df['price'] = 100.0  # Default price
+    else:
+        df['price'] = pd.to_numeric(df['price'], errors='coerce').fillna(100.0)
     
-    # Add default promotion_flag if not present
-    if 'promotion_flag' not in df.columns:
+    # Handle promotion_flag - check if promotion-ids has content
+    if 'promotion_flag' in df.columns:
+        # If it's a string column (promotion-ids), convert to binary
+        if df['promotion_flag'].dtype == 'object':
+            df['promotion_flag'] = df['promotion_flag'].notna() & (df['promotion_flag'].astype(str).str.len() > 0)
+            df['promotion_flag'] = df['promotion_flag'].astype(int)
+        else:
+            df['promotion_flag'] = pd.to_numeric(df['promotion_flag'], errors='coerce').fillna(0).astype(int)
+    else:
         df['promotion_flag'] = 0
     
-    # Parse date column
-    df['date'] = pd.to_datetime(df['date'])
+    # Parse date column - handle various formats
+    df['date'] = pd.to_datetime(df['date'], format='mixed', dayfirst=False, errors='coerce')
+    df = df.dropna(subset=['date'])
     
     if sku_filter:
         df = df[df['sku_id'] == sku_filter]
@@ -400,9 +432,12 @@ def train_and_forecast_lstm_on_train_test(
     epochs: int = EPOCHS,
     batch_size: int = BATCH_SIZE,
     verbose: int = 1,
+    target_col: str = "total_units",
 ) -> tuple[pd.Series, tf.keras.Model, MinMaxScaler]:
 
-    feature_cols = [c for c in train_df.columns if c in ("total_units", "avg_price", "promo_any", "dow_sin", "dow_cos", "doy_sin", "doy_cos")]
+    # ensure target col is first for easy separation
+    feature_cols = [target_col] + [c for c in train_df.columns if c in ("avg_price", "promo_any", "dow_sin", "dow_cos", "doy_sin", "doy_cos") and c != target_col]
+    
     train_arr = train_df[feature_cols].values.astype(float)
     test_arr = test_df[feature_cols].values.astype(float)
 
@@ -428,7 +463,7 @@ def train_and_forecast_lstm_on_train_test(
     callbacks = [
         EarlyStopping(monitor="val_loss", patience=20, restore_best_weights=True),
         tf.keras.callbacks.ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=7),
-        tf.keras.callbacks.ModelCheckpoint("lstm_train_test_best.keras", monitor="val_loss", save_best_only=True),
+        # tf.keras.callbacks.ModelCheckpoint("lstm_train_test_best.keras", monitor="val_loss", save_best_only=True),
     ]
 
     model.fit(
@@ -450,8 +485,13 @@ def train_and_forecast_lstm_on_train_test(
         x = last_window.reshape((1, n_in, train_scaled.shape[1]))
         yhat_block = model.predict(x, verbose=0)[0]
         block_len = min(n_out, steps - idx)
-        exog_block_scaled = test_scaled[idx : idx + block_len]
+        
+        # Prepare next window
+        # We need exog features from test set for the next steps
+        # The first column is our target (which we just predicted)
+        exog_block_scaled = test_scaled[idx : idx + block_len].copy()
         exog_block_scaled[:block_len, 0] = yhat_block[:block_len]
+        
         preds_scaled.extend(yhat_block[:block_len].tolist())
 
         last_window = np.vstack([last_window[block_len:], exog_block_scaled])
@@ -460,12 +500,12 @@ def train_and_forecast_lstm_on_train_test(
     preds_scaled = np.array(preds_scaled).reshape(-1, 1)
     dummy = np.zeros((len(preds_scaled), train_scaled.shape[1]))
     dummy[:, 0:1] = preds_scaled
-    dummy[:, 1:] = test_scaled[:, 1:]
+    dummy[:, 1:] = test_scaled[:, 1:] # Fill exog cols to allow inverse transform
     inv = scaler.inverse_transform(dummy)
-    pred_units = inv[:, 0]
+    pred_vals = inv[:, 0]
 
     forecast_index = test_df.index
-    return pd.Series(pred_units.squeeze(), index=forecast_index), model, scaler
+    return pd.Series(pred_vals.squeeze(), index=forecast_index), model, scaler
 
 
 

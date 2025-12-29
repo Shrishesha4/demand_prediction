@@ -79,19 +79,9 @@
 					<span class="contrib-name">Shrishesha Narmatesshvara</span>
 					<span class="contrib-id">192321183</span>
 				</div>
-				<div class="contrib-module">Module 2 — Model Integration</div>
+				<div class="contrib-module">Module — ML Model Integration Data Preprocessing &amp; Feature Engineering</div>
 				<p class="contrib-desc">Responsible for LSTM architecture, training strategy, model persistence, and integration with the API for production forecasting and per-SKU distribution logic.</p>
 				<p class="contrib-desc">SARIMAX modeling, seasonal and stationarity analysis, model selection, and benchmarking classical methods against LSTM.</p>
-			</div>
-
-			<div class="contributor">
-				<div class="contrib-meta">
-					<span class="contrib-name">K. Pavan Kumar</span>
-					<span class="contrib-id">192212273</span>
-				</div>
-				<div class="contrib-module">Module 1 — Data Preprocessing &amp; Feature Engineering</div>
-				<p class="contrib-desc">Leads data ingestion, cleaning, aggregation and feature engineering that enable both ARIMA and LSTM experiments.</p>
-				<p class="contrib-desc">Handles exploratory data analysis, outlier detection, and implements feature scaling and encoding pipelines to ensure data quality and compatibility for both ARIMA and LSTM models.</p>
 			</div>
 		</div>
 	</section>

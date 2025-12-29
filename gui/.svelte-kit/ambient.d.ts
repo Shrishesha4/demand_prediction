@@ -72,6 +72,7 @@ declare module '$env/static/private' {
 	export const npm_config_cache: string;
 	export const LOGNAME: string;
 	export const npm_lifecycle_script: string;
+	export const PKG_CONFIG_PATH: string;
 	export const npm_config_user_agent: string;
 	export const INFOPATH: string;
 	export const HOMEBREW_CELLAR: string;
@@ -162,6 +163,7 @@ declare module '$env/dynamic/private' {
 		npm_config_cache: string;
 		LOGNAME: string;
 		npm_lifecycle_script: string;
+		PKG_CONFIG_PATH: string;
 		npm_config_user_agent: string;
 		INFOPATH: string;
 		HOMEBREW_CELLAR: string;

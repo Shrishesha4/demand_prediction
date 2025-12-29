@@ -419,50 +419,67 @@ async def forecast_future(
             skus = raw_df['sku_id'].unique()
             forecast_days = quarters * 91
             
-            # Aggregate for total forecast first
+            # Aggregate historical data provided by the user
             hist_agg = load_and_aggregate(str(data_path))
             
-            # Pad if needed (same as before)
-            forecast_start = pd.Timestamp.now().normalize()
-            last_date = hist_agg.index[-1]
-            if last_date < (forecast_start - pd.Timedelta(days=1)):
-                pad_start = last_date + pd.Timedelta(days=1)
-                pad_end = forecast_start - pd.Timedelta(days=1)
-                pad_idx = pd.date_range(start=pad_start, end=pad_end, freq='D')
-                if len(pad_idx) > 0:
-                    # Fill with last knowns
-                    last_units = int(hist_agg['total_units'].iloc[-1])
-                    avg_price = float(hist_agg['avg_price'].mean())
-                    pad_rows = []
-                    for d in pad_idx:
-                        dow = int(d.dayofweek)
-                        doy = int(d.dayofyear)
-                        pad_rows.append({
-                            'date': d,
-                            'total_units': last_units,
-                            'avg_price': avg_price,
-                            'promo_any': 0,
-                            'dow': dow,
-                            'dow_sin': np.sin(2 * np.pi * dow / 7),
-                            'dow_cos': np.cos(2 * np.pi * dow / 7),
-                            'doy_sin': np.sin(2 * np.pi * doy / 365.25),
-                            'doy_cos': np.cos(2 * np.pi * doy / 365.25),
-                        })
-                    pad_df = pd.DataFrame(pad_rows).set_index('date')
-                    hist_agg = pd.concat([hist_agg, pad_df])
-                    last_date = hist_agg.index[-1]
+            # --- Bridge the Gap from Historical Data to Present using Year-over-Year Data ---
+            forecast_start_date = pd.Timestamp.now().normalize()
+            last_hist_date = hist_agg.index[-1]
+            
+            if last_hist_date < forecast_start_date - pd.Timedelta(days=1):
+                logger.info(f"Gap detected from {last_hist_date.date()} to {forecast_start_date.date()}. Bridging with previous year's data...")
+                
+                # Create the date range for the gap
+                gap_dates = pd.date_range(start=last_hist_date + pd.Timedelta(days=1), end=forecast_start_date - pd.Timedelta(days=1), freq='D')
+                
+                if not gap_dates.empty:
+                    # Get the corresponding dates from the previous year
+                    source_dates = gap_dates - pd.DateOffset(years=1)
+                    
+                    # Extract data from the previous year using nearest-neighbor lookup
+                    # This is robust to missing days in the source historical data
+                    source_data = hist_agg.reindex(source_dates, method='nearest')
+                    
+                    # Check if we found valid data to build the bridge
+                    if not source_data.empty and not source_data['total_units'].isnull().all():
+                        # Create the bridge DataFrame
+                        bridge_df = source_data.copy()
+                        bridge_df.index = gap_dates # Important: Reset index to the actual gap dates
+                        
+                        # Combine historical data with the bridged gap
+                        hist_agg = pd.concat([hist_agg, bridge_df])
+                        logger.info(f"Successfully bridged gap using {len(bridge_df)} days of data from the previous year.")
+                    else:
+                        logger.warning("Could not find sufficient data in the previous year to bridge the gap. Forecasting may be less accurate.")
 
-            # --- HYBRID FORECASTING ---
+            last_date = hist_agg.index[-1]
+            
+            # --- Adjust forecast start to avoid partial month issues ---
+            # If we're in the middle of a month, start forecast from the next month
+            # to avoid showing incomplete month data that looks like a huge drop
+            today = pd.Timestamp.now().normalize()
+            if today.day < 28:  # Not end of month yet
+                # Start forecast from the 1st of next month
+                next_month_start = (today + pd.offsets.MonthBegin(1)).normalize()
+                days_to_skip = (next_month_start - last_date).days - 1
+                if days_to_skip > 0 and days_to_skip < forecast_days:
+                    logger.info(f"Skipping {days_to_skip} days to start forecast from complete month: {next_month_start.date()}")
+                    # Adjust last_date to be the day before next month starts
+                    last_date = next_month_start - pd.Timedelta(days=1)
+                    # Reduce forecast_days accordingly
+                    forecast_days = forecast_days - days_to_skip
+
+            # --- HYBRID FORECASTING for the FUTURE ---
             
             # 1. SARIMAX Future Forecast
-            # We must extend the model to current data to get a starting point state
+            # Apply the model to the full history (original + bridged gap) to get an up-to-date state
             sarimax_ext = sarimax_res.apply(hist_agg['total_units'])
             sarimax_forecast = sarimax_ext.get_forecast(steps=forecast_days).predicted_mean
             sarimax_forecast_series = pd.Series(sarimax_forecast.values, index=[last_date + timedelta(days=i + 1) for i in range(forecast_days)])
             
             # 2. LSTM Residual Forecast
             # We need to feed the LSTM with recent data. 
-            # The recent data needs 'residuals' column.
+            # The recent data needs a 'residuals' column.
             # We calculate residuals on the recent history using the extended SARIMAX model
             fitted_values = sarimax_ext.fittedvalues
             residuals = hist_agg['total_units'] - fitted_values

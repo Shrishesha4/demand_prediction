@@ -1,31 +1,32 @@
                                       SARIMAX Results                                      
 ===========================================================================================
-Dep. Variable:                         total_units   No. Observations:                   91
-Model:             SARIMAX(2, 1, 2)x(0, 1, [1], 7)   Log Likelihood                -453.785
-Date:                             Mon, 29 Dec 2025   AIC                            919.571
-Time:                                     14:37:54   BIC                            933.314
-Sample:                                 03-31-2022   HQIC                           925.048
-                                      - 06-29-2022                                         
+Dep. Variable:                         total_units   No. Observations:                 1096
+Model:             SARIMAX(1, 1, 2)x(1, 1, [1], 7)   Log Likelihood               -6634.769
+Date:                             Mon, 29 Dec 2025   AIC                          13281.538
+Time:                                     14:58:00   BIC                          13311.435
+Sample:                                 01-01-2022   HQIC                         13292.859
+                                      - 12-31-2024                                         
 Covariance Type:                               opg                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-ar.L1         -1.3892      0.203     -6.845      0.000      -1.787      -0.991
-ar.L2         -0.3969      0.214     -1.857      0.063      -0.816       0.022
-ma.L1          1.4109      0.276      5.105      0.000       0.869       1.953
-ma.L2          0.4674      0.285      1.642      0.101      -0.090       1.025
-ma.S.L7       -0.8180      0.151     -5.411      0.000      -1.114      -0.522
-sigma2      1.389e+04   2261.166      6.145      0.000    9462.584    1.83e+04
+ar.L1          0.9886      0.006    164.647      0.000       0.977       1.000
+ma.L1         -1.9138      0.013   -147.404      0.000      -1.939      -1.888
+ma.L2          0.9194      0.013     71.534      0.000       0.894       0.945
+ar.S.L7        0.0363      0.025      1.431      0.152      -0.013       0.086
+ma.S.L7       -1.0000      0.037    -26.885      0.000      -1.073      -0.927
+sigma2      1.254e+04   2.96e-06   4.23e+09      0.000    1.25e+04    1.25e+04
 ===================================================================================
-Ljung-Box (L1) (Q):                   0.03   Jarque-Bera (JB):                11.78
-Prob(Q):                              0.87   Prob(JB):                         0.00
-Heteroskedasticity (H):               0.71   Skew:                            -0.75
-Prob(H) (two-sided):                  0.41   Kurtosis:                         4.28
+Ljung-Box (L1) (Q):                   0.62   Jarque-Bera (JB):                48.77
+Prob(Q):                              0.43   Prob(JB):                         0.00
+Heteroskedasticity (H):               1.17   Skew:                             0.40
+Prob(H) (two-sided):                  0.14   Kurtosis:                         3.68
 ===================================================================================
 
 Warnings:
 [1] Covariance matrix calculated using the outer product of gradients (complex-step).
+[2] Covariance matrix is singular or near-singular, with condition number 9.18e+23. Standard errors may be unstable.
 
 mle_retvals:
-{'fopt': np.float64(4.986652976384695), 'gopt': array([-8.19930790e-06,  1.87773352e-05, -1.29901423e-05,  1.46938461e-05,
-        3.38751249e-06,  9.95648008e-08]), 'fcalls': 483, 'warnflag': 0, 'converged': True, 'iterations': 44}
+{'fopt': np.float64(6.0536212877391105), 'gopt': array([-1.08783382e-04,  1.62461955e-04,  2.87831625e-04, -4.95358421e-05,
+       -1.10604947e-04,  3.31699113e-06]), 'fcalls': 889, 'warnflag': 0, 'converged': True, 'iterations': 89}

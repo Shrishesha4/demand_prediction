@@ -145,17 +145,17 @@ const response = await fetch(`${API_BASE}/api/model/download`);
 				labels: ['RMSE', 'MAPE (%)'],
 				datasets: [
 					{
-						label: 'ARIMA',
-						data: [metrics.SARIMAX_RMSE, metrics.SARIMAX_MAPE],
-						backgroundColor: 'rgba(74, 144, 226, 0.7)',
-						borderColor: '#4a90e2',
+						label: 'Hybrid (SARIMAX+LSTM)',
+						data: [metrics.Hybrid_RMSE || 0, metrics.Hybrid_MAPE || 0],
+						backgroundColor: 'rgba(34, 197, 94, 0.7)',
+						borderColor: '#22c55e',
 						borderWidth: 2
 					},
 					{
-						label: 'LSTM',
-						data: [metrics.LSTM_RMSE, metrics.LSTM_MAPE],
-						backgroundColor: 'rgba(249, 115, 22, 0.7)',
-						borderColor: '#f97316',
+						label: 'SARIMAX Only',
+						data: [metrics.SARIMAX_Only_RMSE || 0, 0],
+						backgroundColor: 'rgba(74, 144, 226, 0.7)',
+						borderColor: '#4a90e2',
 						borderWidth: 2
 					}
 				]
@@ -223,8 +223,17 @@ const response = await fetch(`${API_BASE}/api/model/download`);
 </svelte:head>
 
 <div class="container">
-	<h1>Train ARIMA & LSTM Models</h1>
-	<p class="subtitle">Upload your training and test datasets to train forecasting models</p>
+	<h1>Train Hybrid LSTM+SARIMAX Model</h1>
+	<p class="subtitle">Upload your training and test datasets to train the hybrid forecasting model</p>
+
+	<div class="info-box">
+		<strong>💡 Recommended Setup:</strong> Use <strong>ecommerce_demand_train.csv</strong> as <em>Training Data</em> and 
+		<strong>ecommerce_demand_test.csv</strong> as <em>Test Data</em>. 
+		These are pre-split from the same dataset (80/20 split) to ensure consistent patterns.
+		<br><br>
+		<strong>⚠️ Important:</strong> Don't mix datasets! Training on synthetic data and testing on real Amazon data 
+		causes poor results (MAPE >50%). Train and test must come from the same source.
+	</div>
 
 	<div class="upload-section">
 		<div class="file-input-group">
@@ -290,48 +299,52 @@ const response = await fetch(`${API_BASE}/api/model/download`);
 
 	{#if metrics}
 		<div class="results">
-			<h2>Training Results</h2>
+			<h2>Training Results - Hybrid Model</h2>
 
 			<div class="chart-container">
 				<canvas bind:this={chartCanvas}></canvas>
 			</div>
 
 			<div class="metrics-grid">
-				<div class="metric-card sarimax">
-					<h3>ARIMA</h3>
+				<div class="metric-card hybrid">
+					<h3>🔗 Hybrid (SARIMAX + LSTM)</h3>
 					<div class="metric-row">
 						<span>RMSE:</span>
-						<span class="value">{metrics.SARIMAX_RMSE.toFixed(2)}</span>
+						<span class="value">{metrics.Hybrid_RMSE?.toFixed(2) || 'N/A'}</span>
 					</div>
 					<div class="metric-row">
 						<span>MAPE:</span>
-						<span class="value">{metrics.SARIMAX_MAPE.toFixed(2)}%</span>
+						<span class="value">{metrics.Hybrid_MAPE?.toFixed(2) || 'N/A'}%</span>
 					</div>
 				</div>
 
-				<div class="metric-card lstm">
-					<h3>LSTM</h3>
+				<div class="metric-card sarimax">
+					<h3>📈 SARIMAX Only</h3>
 					<div class="metric-row">
 						<span>RMSE:</span>
-						<span class="value">{metrics.LSTM_RMSE.toFixed(2)}</span>
+						<span class="value">{metrics.SARIMAX_Only_RMSE?.toFixed(2) || 'N/A'}</span>
 					</div>
 					<div class="metric-row">
 						<span>MAPE:</span>
-						<span class="value">{metrics.LSTM_MAPE.toFixed(2)}%</span>
+						<span class="value">N/A</span>
 					</div>
 				</div>
 			</div>
 
 			<div class="comparison">
-				{#if metrics.LSTM_RMSE < metrics.SARIMAX_RMSE}
-					<p class="winner">🎉 LSTM outperforms ARIMA!</p>
+				{#if metrics.Hybrid_RMSE && metrics.SARIMAX_Only_RMSE}
+					{#if metrics.Hybrid_RMSE < metrics.SARIMAX_Only_RMSE}
+						<p class="winner">🎉 Hybrid model outperforms SARIMAX-only by {((metrics.SARIMAX_Only_RMSE - metrics.Hybrid_RMSE) / metrics.SARIMAX_Only_RMSE * 100).toFixed(1)}%!</p>
+					{:else}
+						<p class="info">SARIMAX-only performed slightly better. Hybrid RMSE: {metrics.Hybrid_RMSE.toFixed(2)} vs SARIMAX: {metrics.SARIMAX_Only_RMSE.toFixed(2)}</p>
+					{/if}
 				{:else}
-					<p class="info">ARIMA performed better on this dataset.</p>
+					<p class="info">Training complete! Model saved successfully.</p>
 				{/if}
 			</div>
 
 			<button class="download-btn" on:click={downloadModel}>
-				Download LSTM Model (.keras)
+				Download Model Files
 			</button>
 		</div>
 	{/if}
@@ -353,6 +366,26 @@ const response = await fetch(`${API_BASE}/api/model/download`);
 	.subtitle {
 		color: #666;
 		margin-bottom: 2rem;
+	}
+
+	.info-box {
+		background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+		border-left: 4px solid #3b82f6;
+		padding: 1rem 1.5rem;
+		border-radius: 8px;
+		margin-bottom: 2rem;
+		color: #1e3a8a;
+		line-height: 1.6;
+	}
+
+	.info-box strong {
+		color: #1e40af;
+	}
+
+	.info-box em {
+		font-weight: 600;
+		font-style: normal;
+		color: #2563eb;
 	}
 
 	.upload-section {
@@ -498,12 +531,12 @@ const response = await fetch(`${API_BASE}/api/model/download`);
 		font-size: 1.2rem;
 	}
 
-	.metric-card.sarimax h3 {
-		color: #4a90e2;
+	.metric-card.hybrid h3 {
+		color: #22c55e;
 	}
 
-	.metric-card.lstm h3 {
-		color: #f97316;
+	.metric-card.sarimax h3 {
+		color: #4a90e2;
 	}
 
 	.metric-row {

@@ -1099,20 +1099,7 @@ function adjustChartYAxis(chart:any, values:any[], ma7:any[], ma14:any[]) {
 	}
 
 	.option-item input[type='number'],
-	.option-item .model-select {
-		width: auto;
-		min-width: 80px;
-		padding: 0.5rem;
-		border: 1px solid #ddd;
-		border-radius: 4px;
-		font-size: 1rem;
-		cursor: pointer;
-	}
 
-	.model-select {
-		min-width: 180px;
-		background: white;
-	}
 
 	.sku-selector {
 		background: #e0f2fe;

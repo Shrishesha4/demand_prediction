@@ -1,175 +1,13 @@
 INFO:     Will watch for changes in these directories: ['/Users/shrishesha/Developer/temp/demand_prediction/be']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [95129] using WatchFiles
+INFO:     Started reloader process [4264] using WatchFiles
 /Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/keras/src/export/tf2onnx_lib.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
   if not hasattr(np, "object"):
-INFO:main:CORS allowed origins: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080', 'https://pdp.shrishesha.space']
-INFO:     Started server process [95133]
+INFO:main:CORS allowed origins: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080', 'https://pdpl.shrishesha.space']
+INFO:     Started server process [4268]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:54797 - "GET /health HTTP/1.1" 200 OK
-INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
-/Users/shrishesha/Developer/temp/demand_prediction/be/main.py:418: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
-  raw_df['date'] = pd.to_datetime(raw_df['date'])
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
-  self._init_dates(dates, freq)
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
-  self._init_dates(dates, freq)
-INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=364
-INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'residuals']
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  warnings.warn(
-INFO:main:Generated 364 future predictions
-INFO:     192.0.0.2:55002 - "POST /forecast_future HTTP/1.1" 200 OK
-INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
-/Users/shrishesha/Developer/temp/demand_prediction/be/main.py:418: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
-  raw_df['date'] = pd.to_datetime(raw_df['date'])
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
-  self._init_dates(dates, freq)
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
-  self._init_dates(dates, freq)
-INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=364
-INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'residuals']
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  warnings.warn(
-INFO:main:Generated 364 future predictions
-INFO:     192.0.0.2:55058 - "POST /forecast_future HTTP/1.1" 200 OK
-INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
-  self._init_dates(dates, freq)
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
-  self._init_dates(dates, freq)
-INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=364
-INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'residuals']
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  warnings.warn(
-INFO:main:Generated 364 future predictions
-INFO:     192.0.0.2:55131 - "POST /forecast_future HTTP/1.1" 200 OK
-INFO:     192.0.0.2:55174 - "POST /train HTTP/1.1" 202 Accepted
-INFO:main:Background training job d5af6405-a797-4249-a603-1798c99ed14c started with seed=42
-INFO:     192.0.0.2:55177 - "GET /train/status/d5af6405-a797-4249-a603-1798c99ed14c HTTP/1.1" 200 OK
-INFO:main:Loaded train (91 days) and test (91 days)
-INFO:main:Training SARIMAX (Linear Component)...
-INFO:     192.0.0.2:55181 - "GET /train/status/d5af6405-a797-4249-a603-1798c99ed14c HTTP/1.1" 200 OK
-INFO:     192.0.0.2:55183 - "GET /train/status/d5af6405-a797-4249-a603-1798c99ed14c HTTP/1.1" 200 OK
-INFO:     192.0.0.2:55187 - "GET /train/status/d5af6405-a797-4249-a603-1798c99ed14c HTTP/1.1" 200 OK
-INFO:root:Selected SARIMAX order (2, 1, 2) seasonal (0, 1, 1, 7) using exog cols=[]
-INFO:root:SARIMAX final fit converged with method=lbfgs
-INFO:root:SARIMAX mle_retvals: {'fopt': np.float64(4.986652976384695), 'gopt': array([-8.19930790e-06,  1.87773352e-05, -1.29901423e-05,  1.46938461e-05,
-        3.38751249e-06,  9.95648008e-08]), 'fcalls': 483, 'warnflag': 0, 'converged': True, 'iterations': 44}
-INFO:root:SARIMAX summary:
-                                      SARIMAX Results                                      
-===========================================================================================
-Dep. Variable:                         total_units   No. Observations:                   91
-Model:             SARIMAX(2, 1, 2)x(0, 1, [1], 7)   Log Likelihood                -453.785
-Date:                             Mon, 29 Dec 2025   AIC                            919.571
-Time:                                     14:36:07   BIC                            933.314
-Sample:                                 03-31-2022   HQIC                           925.048
-                                      - 06-29-2022                                         
-Covariance Type:                               opg                                         
-==============================================================================
-                 coef    std err          z      P>|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-ar.L1         -1.3892      0.203     -6.845      0.000      -1.787      -0.991
-ar.L2         -0.3969      0.214     -1.857      0.063      -0.816       0.022
-ma.L1          1.4109      0.276      5.105      0.000       0.869       1.953
-ma.L2          0.4674      0.285      1.642      0.101      -0.090       1.025
-ma.S.L7       -0.8180      0.151     -5.411      0.000      -1.114      -0.522
-sigma2      1.389e+04   2261.166      6.145      0.000    9462.584    1.83e+04
-===================================================================================
-Ljung-Box (L1) (Q):                   0.03   Jarque-Bera (JB):                11.78
-Prob(Q):                              0.87   Prob(JB):                         0.00
-Heteroskedasticity (H):               0.71   Skew:                            -0.75
-Prob(H) (two-sided):                  0.41   Kurtosis:                         4.28
-===================================================================================
-
-Warnings:
-[1] Covariance matrix calculated using the outer product of gradients (complex-step).
-INFO:main:Training LSTM on Residuals...
-2025-12-29 14:36:08.179309: E tensorflow/core/framework/node_def_util.cc:680] NodeDef mentions attribute use_unbounded_threadpool which is not in the op definition: Op<name=MapDataset; signature=input_dataset:variant, other_arguments: -> handle:variant; attr=f:func; attr=Targuments:list(type),min=0; attr=output_types:list(type),min=1; attr=output_shapes:list(shape),min=1; attr=use_inter_op_parallelism:bool,default=true; attr=preserve_cardinality:bool,default=false; attr=force_synchronous:bool,default=false; attr=metadata:string,default=""> This may be expected if your graph generating binary is newer  than this binary. Unknown attributes will be ignored. NodeDef: {{node ParallelMapDatasetV2/_15}}
-INFO:     192.0.0.2:55189 - "GET /train/status/d5af6405-a797-4249-a603-1798c99ed14c HTTP/1.1" 200 OK
-INFO:     192.0.0.2:55190 - "GET /train/status/d5af6405-a797-4249-a603-1798c99ed14c HTTP/1.1" 200 OK
-INFO:main:Saved LSTM scaler to models/scaler_minmax.pkl
-INFO:main:Saved SARIMAX model to models/sarimax_model.pkl
-INFO:main:Background training job d5af6405-a797-4249-a603-1798c99ed14c complete. Hybrid Metrics: {'Hybrid_RMSE': 1169.0646787390835, 'Hybrid_MAPE': 97.41377092274273, 'SARIMAX_Only_RMSE': 1246.2079917790052}
-INFO:     192.0.0.2:55196 - "GET /train/status/d5af6405-a797-4249-a603-1798c99ed14c HTTP/1.1" 200 OK
-INFO:     192.0.0.2:55245 - "POST /train HTTP/1.1" 202 Accepted
-INFO:main:Background training job 99b98bd9-eef8-4b9f-8c4f-dd04c3713278 started with seed=42
-INFO:     192.0.0.2:55246 - "GET /train/status/99b98bd9-eef8-4b9f-8c4f-dd04c3713278 HTTP/1.1" 200 OK
-INFO:main:Loaded train (91 days) and test (1096 days)
-INFO:main:Training SARIMAX (Linear Component)...
-INFO:     192.0.0.2:55248 - "GET /train/status/99b98bd9-eef8-4b9f-8c4f-dd04c3713278 HTTP/1.1" 200 OK
-INFO:     192.0.0.2:55252 - "GET /train/status/99b98bd9-eef8-4b9f-8c4f-dd04c3713278 HTTP/1.1" 200 OK
-INFO:     192.0.0.2:55257 - "GET /train/status/99b98bd9-eef8-4b9f-8c4f-dd04c3713278 HTTP/1.1" 200 OK
-INFO:root:Selected SARIMAX order (2, 1, 2) seasonal (0, 1, 1, 7) using exog cols=[]
-INFO:root:SARIMAX final fit converged with method=lbfgs
-INFO:root:SARIMAX mle_retvals: {'fopt': np.float64(4.986652976384695), 'gopt': array([-8.19930790e-06,  1.87773352e-05, -1.29901423e-05,  1.46938461e-05,
-        3.38751249e-06,  9.95648008e-08]), 'fcalls': 483, 'warnflag': 0, 'converged': True, 'iterations': 44}
-INFO:root:SARIMAX summary:
-                                      SARIMAX Results                                      
-===========================================================================================
-Dep. Variable:                         total_units   No. Observations:                   91
-Model:             SARIMAX(2, 1, 2)x(0, 1, [1], 7)   Log Likelihood                -453.785
-Date:                             Mon, 29 Dec 2025   AIC                            919.571
-Time:                                     14:37:46   BIC                            933.314
-Sample:                                 03-31-2022   HQIC                           925.048
-                                      - 06-29-2022                                         
-Covariance Type:                               opg                                         
-==============================================================================
-                 coef    std err          z      P>|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-ar.L1         -1.3892      0.203     -6.845      0.000      -1.787      -0.991
-ar.L2         -0.3969      0.214     -1.857      0.063      -0.816       0.022
-ma.L1          1.4109      0.276      5.105      0.000       0.869       1.953
-ma.L2          0.4674      0.285      1.642      0.101      -0.090       1.025
-ma.S.L7       -0.8180      0.151     -5.411      0.000      -1.114      -0.522
-sigma2      1.389e+04   2261.166      6.145      0.000    9462.584    1.83e+04
-===================================================================================
-Ljung-Box (L1) (Q):                   0.03   Jarque-Bera (JB):                11.78
-Prob(Q):                              0.87   Prob(JB):                         0.00
-Heteroskedasticity (H):               0.71   Skew:                            -0.75
-Prob(H) (two-sided):                  0.41   Kurtosis:                         4.28
-===================================================================================
-
-Warnings:
-[1] Covariance matrix calculated using the outer product of gradients (complex-step).
-INFO:main:Training LSTM on Residuals...
-2025-12-29 14:37:46.743691: E tensorflow/core/framework/node_def_util.cc:680] NodeDef mentions attribute use_unbounded_threadpool which is not in the op definition: Op<name=MapDataset; signature=input_dataset:variant, other_arguments: -> handle:variant; attr=f:func; attr=Targuments:list(type),min=0; attr=output_types:list(type),min=1; attr=output_shapes:list(shape),min=1; attr=use_inter_op_parallelism:bool,default=true; attr=preserve_cardinality:bool,default=false; attr=force_synchronous:bool,default=false; attr=metadata:string,default=""> This may be expected if your graph generating binary is newer  than this binary. Unknown attributes will be ignored. NodeDef: {{node ParallelMapDatasetV2/_15}}
-INFO:     192.0.0.2:55262 - "GET /train/status/99b98bd9-eef8-4b9f-8c4f-dd04c3713278 HTTP/1.1" 200 OK
-INFO:     192.0.0.2:55263 - "GET /train/status/99b98bd9-eef8-4b9f-8c4f-dd04c3713278 HTTP/1.1" 200 OK
-2025-12-29 14:37:51.766737: E tensorflow/core/framework/node_def_util.cc:680] NodeDef mentions attribute use_unbounded_threadpool which is not in the op definition: Op<name=MapDataset; signature=input_dataset:variant, other_arguments: -> handle:variant; attr=f:func; attr=Targuments:list(type),min=0; attr=output_types:list(type),min=1; attr=output_shapes:list(shape),min=1; attr=use_inter_op_parallelism:bool,default=true; attr=preserve_cardinality:bool,default=false; attr=force_synchronous:bool,default=false; attr=metadata:string,default=""> This may be expected if your graph generating binary is newer  than this binary. Unknown attributes will be ignored. NodeDef: {{node ParallelMapDatasetV2/_14}}
-INFO:     192.0.0.2:55267 - "GET /train/status/99b98bd9-eef8-4b9f-8c4f-dd04c3713278 HTTP/1.1" 200 OK
-INFO:main:Saved LSTM scaler to models/scaler_minmax.pkl
-INFO:main:Saved SARIMAX model to models/sarimax_model.pkl
-INFO:main:Background training job 99b98bd9-eef8-4b9f-8c4f-dd04c3713278 complete. Hybrid Metrics: {'Hybrid_RMSE': 9742.585399311482, 'Hybrid_MAPE': 602.3872893853202, 'SARIMAX_Only_RMSE': 9221.503409287636}
-INFO:     192.0.0.2:55269 - "GET /train/status/99b98bd9-eef8-4b9f-8c4f-dd04c3713278 HTTP/1.1" 200 OK
-INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
-  self._init_dates(dates, freq)
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
-  self._init_dates(dates, freq)
-INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=364
-INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'residuals']
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  warnings.warn(
-2025-12-29 14:38:15.216552: E tensorflow/core/framework/node_def_util.cc:680] NodeDef mentions attribute use_unbounded_threadpool which is not in the op definition: Op<name=MapDataset; signature=input_dataset:variant, other_arguments: -> handle:variant; attr=f:func; attr=Targuments:list(type),min=0; attr=output_types:list(type),min=1; attr=output_shapes:list(shape),min=1; attr=use_inter_op_parallelism:bool,default=true; attr=preserve_cardinality:bool,default=false; attr=force_synchronous:bool,default=false; attr=metadata:string,default=""> This may be expected if your graph generating binary is newer  than this binary. Unknown attributes will be ignored. NodeDef: {{node ParallelMapDatasetV2/_14}}
-2025-12-29 14:38:20.242290: E tensorflow/core/framework/node_def_util.cc:680] NodeDef mentions attribute use_unbounded_threadpool which is not in the op definition: Op<name=MapDataset; signature=input_dataset:variant, other_arguments: -> handle:variant; attr=f:func; attr=Targuments:list(type),min=0; attr=output_types:list(type),min=1; attr=output_shapes:list(shape),min=1; attr=use_inter_op_parallelism:bool,default=true; attr=preserve_cardinality:bool,default=false; attr=force_synchronous:bool,default=false; attr=metadata:string,default=""> This may be expected if your graph generating binary is newer  than this binary. Unknown attributes will be ignored. NodeDef: {{node ParallelMapDatasetV2/_14}}
-2025-12-29 14:38:25.261916: E tensorflow/core/framework/node_def_util.cc:680] NodeDef mentions attribute use_unbounded_threadpool which is not in the op definition: Op<name=MapDataset; signature=input_dataset:variant, other_arguments: -> handle:variant; attr=f:func; attr=Targuments:list(type),min=0; attr=output_types:list(type),min=1; attr=output_shapes:list(shape),min=1; attr=use_inter_op_parallelism:bool,default=true; attr=preserve_cardinality:bool,default=false; attr=force_synchronous:bool,default=false; attr=metadata:string,default=""> This may be expected if your graph generating binary is newer  than this binary. Unknown attributes will be ignored. NodeDef: {{node ParallelMapDatasetV2/_14}}
-INFO:main:Generated 364 future predictions
-INFO:     192.0.0.2:55309 - "POST /forecast_future HTTP/1.1" 200 OK
-INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
-  self._init_dates(dates, freq)
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
-  self._init_dates(dates, freq)
-INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=182
-INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'residuals']
-/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
-  warnings.warn(
-2025-12-29 14:38:58.414900: E tensorflow/core/framework/node_def_util.cc:680] NodeDef mentions attribute use_unbounded_threadpool which is not in the op definition: Op<name=MapDataset; signature=input_dataset:variant, other_arguments: -> handle:variant; attr=f:func; attr=Targuments:list(type),min=0; attr=output_types:list(type),min=1; attr=output_shapes:list(shape),min=1; attr=use_inter_op_parallelism:bool,default=true; attr=preserve_cardinality:bool,default=false; attr=force_synchronous:bool,default=false; attr=metadata:string,default=""> This may be expected if your graph generating binary is newer  than this binary. Unknown attributes will be ignored. NodeDef: {{node ParallelMapDatasetV2/_14}}
-2025-12-29 14:39:03.434530: E tensorflow/core/framework/node_def_util.cc:680] NodeDef mentions attribute use_unbounded_threadpool which is not in the op definition: Op<name=MapDataset; signature=input_dataset:variant, other_arguments: -> handle:variant; attr=f:func; attr=Targuments:list(type),min=0; attr=output_types:list(type),min=1; attr=output_shapes:list(shape),min=1; attr=use_inter_op_parallelism:bool,default=true; attr=preserve_cardinality:bool,default=false; attr=force_synchronous:bool,default=false; attr=metadata:string,default=""> This may be expected if your graph generating binary is newer  than this binary. Unknown attributes will be ignored. NodeDef: {{node ParallelMapDatasetV2/_14}}
-INFO:main:Generated 182 future predictions
-INFO:     192.0.0.2:55331 - "POST /forecast_future HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58210 - "GET /health HTTP/1.1" 200 OK
 INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
 /Users/shrishesha/Developer/temp/demand_prediction/be/main.py:418: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
   raw_df['date'] = pd.to_datetime(raw_df['date'])
@@ -181,13 +19,31 @@ INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=18
 INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'residuals']
 /Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
   warnings.warn(
-2025-12-29 14:40:09.064191: E tensorflow/core/framework/node_def_util.cc:680] NodeDef mentions attribute use_unbounded_threadpool which is not in the op definition: Op<name=MapDataset; signature=input_dataset:variant, other_arguments: -> handle:variant; attr=f:func; attr=Targuments:list(type),min=0; attr=output_types:list(type),min=1; attr=output_shapes:list(shape),min=1; attr=use_inter_op_parallelism:bool,default=true; attr=preserve_cardinality:bool,default=false; attr=force_synchronous:bool,default=false; attr=metadata:string,default=""> This may be expected if your graph generating binary is newer  than this binary. Unknown attributes will be ignored. NodeDef: {{node ParallelMapDatasetV2/_14}}
-2025-12-29 14:40:14.070421: E tensorflow/core/framework/node_def_util.cc:680] NodeDef mentions attribute use_unbounded_threadpool which is not in the op definition: Op<name=MapDataset; signature=input_dataset:variant, other_arguments: -> handle:variant; attr=f:func; attr=Targuments:list(type),min=0; attr=output_types:list(type),min=1; attr=output_shapes:list(shape),min=1; attr=use_inter_op_parallelism:bool,default=true; attr=preserve_cardinality:bool,default=false; attr=force_synchronous:bool,default=false; attr=metadata:string,default=""> This may be expected if your graph generating binary is newer  than this binary. Unknown attributes will be ignored. NodeDef: {{node ParallelMapDatasetV2/_14}}
 INFO:main:Generated 182 future predictions
-INFO:     192.0.0.2:55382 - "POST /forecast_future HTTP/1.1" 200 OK
+INFO:     10.0.0.5:58471 - "POST /forecast_future HTTP/1.1" 200 OK
 INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
-/Users/shrishesha/Developer/temp/demand_prediction/be/main.py:418: UserWarning: Could not infer format, so each element will be parsed individually, falling back to `dateutil`. To ensure parsing is consistent and as-expected, please specify a format.
-  raw_df['date'] = pd.to_datetime(raw_df['date'])
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
+  self._init_dates(dates, freq)
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
+  self._init_dates(dates, freq)
+INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=182
+INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'residuals']
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
+  warnings.warn(
+INFO:main:Generated 182 future predictions
+INFO:     10.0.0.5:58569 - "POST /forecast_future HTTP/1.1" 200 OK
+INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
+  self._init_dates(dates, freq)
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
+  self._init_dates(dates, freq)
+INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=546
+INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'residuals']
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
+  warnings.warn(
+INFO:main:Generated 546 future predictions
+INFO:     10.0.0.5:58611 - "POST /forecast_future HTTP/1.1" 200 OK
+INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
 /Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
   self._init_dates(dates, freq)
 /Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/statsmodels/tsa/base/tsa_model.py:473: ValueWarning: No frequency information was provided, so inferred frequency D will be used.
@@ -196,6 +52,97 @@ INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=91
 INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'residuals']
 /Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
   warnings.warn(
-2025-12-29 14:41:31.254392: E tensorflow/core/framework/node_def_util.cc:680] NodeDef mentions attribute use_unbounded_threadpool which is not in the op definition: Op<name=MapDataset; signature=input_dataset:variant, other_arguments: -> handle:variant; attr=f:func; attr=Targuments:list(type),min=0; attr=output_types:list(type),min=1; attr=output_shapes:list(shape),min=1; attr=use_inter_op_parallelism:bool,default=true; attr=preserve_cardinality:bool,default=false; attr=force_synchronous:bool,default=false; attr=metadata:string,default=""> This may be expected if your graph generating binary is newer  than this binary. Unknown attributes will be ignored. NodeDef: {{node ParallelMapDatasetV2/_14}}
 INFO:main:Generated 91 future predictions
-INFO:     192.0.0.2:55411 - "POST /forecast_future HTTP/1.1" 200 OK
+INFO:     10.0.0.5:58955 - "POST /forecast_future HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4268]
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/keras/src/export/tf2onnx_lib.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, "object"):
+INFO:main:CORS allowed origins: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080', 'https://pdpl.shrishesha.space']
+INFO:     Started server process [5736]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [5736]
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/keras/src/export/tf2onnx_lib.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, "object"):
+INFO:main:CORS allowed origins: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080', 'https://pdpl.shrishesha.space']
+INFO:     Started server process [5783]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
+INFO:main:Gap of 363 days detected. Bridging with SARIMAX forecast...
+INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=91
+INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'doy', 'residuals']
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
+  warnings.warn(
+INFO:main:Generated 91 future predictions
+INFO:     10.0.0.5:59178 - "POST /forecast_future HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [5783]
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/keras/src/export/tf2onnx_lib.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, "object"):
+INFO:main:CORS allowed origins: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080', 'https://pdpl.shrishesha.space']
+INFO:     Started server process [6112]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6112]
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/keras/src/export/tf2onnx_lib.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, "object"):
+INFO:main:CORS allowed origins: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080', 'https://pdpl.shrishesha.space']
+INFO:     Started server process [6153]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
+INFO:main:Gap detected from 2024-12-31 to 2025-12-29. Bridging with previous year's data...
+INFO:main:Successfully bridged gap using 362 days of data from the previous year.
+INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=91
+INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'residuals']
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
+  warnings.warn(
+INFO:main:Generated 91 future predictions
+INFO:     10.0.0.5:59274 - "POST /forecast_future HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6153]
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/keras/src/export/tf2onnx_lib.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, "object"):
+INFO:main:CORS allowed origins: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080', 'https://pdpl.shrishesha.space']
+INFO:     Started server process [6364]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6364]
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/keras/src/export/tf2onnx_lib.py:8: FutureWarning: In the future `np.object` will be defined as the corresponding NumPy scalar.
+  if not hasattr(np, "object"):
+INFO:main:CORS allowed origins: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:8080', 'https://pdpl.shrishesha.space']
+INFO:     Started server process [6390]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:main:Loaded Hybrid models (SARIMAX + LSTM)
+INFO:main:Gap detected from 2024-12-31 to 2025-12-29. Bridging with previous year's data...
+INFO:main:Successfully bridged gap using 362 days of data from the previous year.
+INFO:main:predict_future_with_lstm: seed_data rows=30, n_in=30, forecast_days=91
+INFO:main:predict_future_with_lstm: seed_data columns=['total_units', 'avg_price', 'promo_any', 'dow', 'dow_sin', 'dow_cos', 'doy_sin', 'doy_cos', 'residuals']
+/Users/shrishesha/Developer/temp/demand_prediction/be/.venv/lib/python3.11/site-packages/sklearn/utils/validation.py:2684: UserWarning: X has feature names, but MinMaxScaler was fitted without feature names
+  warnings.warn(
+INFO:main:Generated 91 future predictions
+INFO:     10.0.0.5:59434 - "POST /forecast_future HTTP/1.1" 200 OK

@@ -2,7 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
-const allowedHostsEnv = process.env.ALLOWED_HOSTS || 'localhost';
+const allowedHostsEnv = process.env.ALLOWED_HOSTS || 'pdp.shrishesha.space,pdpl.shrishesha.space,localhost';
 const parseAllowedHosts = (v: string) => {
 	if (!v) return ['localhost'];
 	if (v === 'all' || v === '*') return 'all' as any;
@@ -14,7 +14,7 @@ const hostBinding: boolean | string = process.env.HOST ? process.env.HOST : true
 
 // Public host/protocol inference for HMR clients (set via FRONTEND_URL or PUBLIC_HOST)
 const rawFrontendUrl = process.env.FRONTEND_URL || '';
-let publicHost = process.env.PUBLIC_HOST || process.env.HMR_HOST || 'pdp.shrishesha.space';
+let publicHost = process.env.PUBLIC_HOST || process.env.HMR_HOST;
 let hmrProtocol = process.env.HMR_PROTOCOL || (process.env.HTTPS ? 'wss' : 'ws');
 let defaultClientPort = (hmrProtocol === 'wss' ? 443 : 5173);
 

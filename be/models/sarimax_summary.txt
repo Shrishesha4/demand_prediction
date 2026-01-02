@@ -1,30 +1,32 @@
                                       SARIMAX Results                                      
 ===========================================================================================
-Dep. Variable:                         total_units   No. Observations:                  730
-Model:             SARIMAX(1, 1, 2)x(0, 1, [1], 7)   Log Likelihood               -4480.634
-Date:                             Mon, 29 Dec 2025   AIC                           8971.268
-Time:                                     17:39:40   BIC                           8994.108
-Sample:                                 01-01-2022   HQIC                          8980.090
-                                      - 12-31-2023                                         
+Dep. Variable:                         total_units   No. Observations:                  877
+Model:             SARIMAX(2, 0, 2)x(0, 1, [1], 7)   Log Likelihood               -5234.632
+Date:                             Fri, 02 Jan 2026   AIC                          10481.263
+Time:                                     09:00:52   BIC                          10509.805
+Sample:                                 01-01-2022   HQIC                         10492.190
+                                      - 05-26-2024                                         
 Covariance Type:                               opg                                         
 ==============================================================================
                  coef    std err          z      P>|z|      [0.025      0.975]
 ------------------------------------------------------------------------------
-ar.L1          0.9593      0.017     55.456      0.000       0.925       0.993
-ma.L1         -1.8652      0.023    -82.343      0.000      -1.910      -1.821
-ma.L2          0.8763      0.021     41.508      0.000       0.835       0.918
-ma.S.L7       -1.0181      0.017    -59.060      0.000      -1.052      -0.984
-sigma2      1.601e+04    890.133     17.986      0.000    1.43e+04    1.78e+04
+ar.L1          1.9996      0.001   2848.045      0.000       1.998       2.001
+ar.L2         -0.9999      0.001  -1424.773      0.000      -1.001      -0.999
+ma.L1         -1.9807      0.008   -241.496      0.000      -1.997      -1.965
+ma.L2          0.9815      0.008    120.075      0.000       0.965       0.998
+ma.S.L7       -0.9854      0.013    -73.632      0.000      -1.012      -0.959
+sigma2      1.277e+04   3.21e-08   3.98e+11      0.000    1.28e+04    1.28e+04
 ===================================================================================
-Ljung-Box (L1) (Q):                   0.00   Jarque-Bera (JB):                 4.10
-Prob(Q):                              0.99   Prob(JB):                         0.13
-Heteroskedasticity (H):               1.26   Skew:                             0.13
-Prob(H) (two-sided):                  0.07   Kurtosis:                         3.26
+Ljung-Box (L1) (Q):                   1.35   Jarque-Bera (JB):                35.44
+Prob(Q):                              0.24   Prob(JB):                         0.00
+Heteroskedasticity (H):               1.26   Skew:                             0.29
+Prob(H) (two-sided):                  0.05   Kurtosis:                         3.81
 ===================================================================================
 
 Warnings:
 [1] Covariance matrix calculated using the outer product of gradients (complex-step).
+[2] Covariance matrix is singular or near-singular, with condition number 3.65e+28. Standard errors may be unstable.
 
 mle_retvals:
-{'fopt': np.float64(6.137854481482984), 'gopt': array([ 1.95048422e-05, -3.17822213e-05, -2.88190805e-05,  1.14631860e-05,
-        5.43565193e-08]), 'fcalls': 354, 'warnflag': 0, 'converged': True, 'iterations': 48}
+{'fopt': np.float64(5.968793045743671), 'gopt': array([ 2.03857273e+01,  2.02971439e+01, -1.15741967e-01, -4.81062704e-02,
+       -2.05756067e-01,  1.54882995e-03]), 'fcalls': 686, 'warnflag': 0, 'converged': True, 'iterations': 47}

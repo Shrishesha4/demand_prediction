@@ -1,12 +1,15 @@
 {
-  "timestamp": "2025-12-29T17:39:40.873459",
-  "job_id": "52efb71e-ce78-4a98-8b7f-f5dd9c56b220",
+  "timestamp": "2026-01-02T09:00:52.735063",
+  "job_id": "cab90fcb-e81b-442f-b97a-afe31b8a5e71",
   "seed": 42,
-  "train_size": 730,
-  "test_size": 366,
+  "train_size": 877,
+  "test_size": 220,
   "metrics": {
-    "Hybrid_RMSE": 309.5111031283992,
-    "Hybrid_MAPE": 18.44775449689762,
-    "SARIMAX_Only_RMSE": 305.96474080104906
+    "Hybrid_RMSE": 238.85016658904814,
+    "Hybrid_MAPE": 14.045083414026694,
+    "SARIMAX_Only_RMSE": 235.04125113355974,
+    "SARIMAX_Only_MAPE": 13.918976874838107,
+    "LSTM_Only_RMSE": 160.5962683538342,
+    "LSTM_Only_MAPE": 8.522275772997743
   }
 }

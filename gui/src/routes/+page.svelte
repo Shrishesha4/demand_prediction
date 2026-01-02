@@ -36,6 +36,17 @@
 			</ul>
 			<button class="cta-btn" on:click={() => goto('/predict')}>Predict →</button>
 		</div>
+		<div class="card">
+			<h2>Compare</h2>
+			<p>Compare the performance of ARIMA, LSTM, and Hybrid models.</p>
+			<ul class="features">
+				<li>✓ Side-by-side comparison</li>
+				<li>✓ RMSE and MAPE metrics</li>
+				<li>✓ Ascending order of performance</li>
+				<li>✓ Clear visualizations</li>
+			</ul>
+			<button class="cta-btn" on:click={() => goto('/compare')}>Compare →</button>
+		</div>
 	</div>
 
 	<div class="info-section">

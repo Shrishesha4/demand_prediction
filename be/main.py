@@ -177,8 +177,18 @@ def _run_training_job(train_contents: bytes, test_contents: bytes, seed: int, jo
             "Hybrid_MAPE": float(mape(actual.values, hybrid_forecast.values)),
             # Also log components performance for debugging
             "SARIMAX_Only_RMSE": float(rmse(actual.values, sarimax_forecast_test.values)),
+            "SARIMAX_Only_MAPE": float(mape(actual.values, sarimax_forecast_test.values)),
         }
 
+        # --- STANDALONE LSTM ---
+        logger.info("Training Standalone LSTM on total_units...")
+        lstm_forecast_standalone, _, _ = train_and_forecast_lstm_on_train_test(
+            train_df, test_df, n_in=N_IN, n_out=N_OUT, epochs=EPOCHS, batch_size=BATCH_SIZE, verbose=0,
+            target_col="total_units"
+        )
+        metrics["LSTM_Only_RMSE"] = float(rmse(actual.values, lstm_forecast_standalone.values))
+        metrics["LSTM_Only_MAPE"] = float(mape(actual.values, lstm_forecast_standalone.values))
+        
         # 5. Save Models
         lstm_model.save(str(LSTM_MODEL_PATH))
         try:

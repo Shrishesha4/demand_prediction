@@ -1,1 +1,1 @@
-export { default as component } from "../../../../src/routes/predict/+page.svelte";
+export { default as component } from "../../../../src/routes/compare/+page.svelte";

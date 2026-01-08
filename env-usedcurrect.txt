@@ -1,0 +1,32 @@
+# Project root .env (single source of truth)
+# Copy `docker_cloud/.env.example` -> `.env` at the project root and edit the values.
+# Do NOT commit this file with secrets in it.
+
+# Docker image base name
+IMAGE=shrishesha4/pdp
+
+# Optional explicit overrides
+# BACKEND_IMAGE=yourusername/backend:tag
+# FRONTEND_IMAGE=yourusername/frontend:tag
+
+# Optional deployment settings
+# BACKEND_PORT=8000
+# FRONTEND_PORT=5173
+FRONTEND_URL=https://pdp.shrishesha.space
+
+# Frontend API Base URL (leave empty for production, use http://localhost:8000 for local dev)
+VITE_API_BASE=
+
+# Example runtime vars for frontend preview / production
+# ALLOWED_HOSTS=pdp.shrishesha.space,localhost
+HOST=0.0.0.0
+PUBLIC_HOST=pdp.shrishesha.space
+HMR_PROTOCOL=wss
+HMR_BIND_HOST=0.0.0.0
+HMR_PORT=5173
+HMR_CLIENT_PORT=443
+HMR_HOST=pdp.shrishesha.space
+
+# Optional: local convenience (prefer to use CI secrets in production)
+# DOCKERHUB_USERNAME=yourusername
+# DOCKERHUB_TOKEN=your_token_here
